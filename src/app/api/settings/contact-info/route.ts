@@ -22,7 +22,8 @@ export async function GET() {
                 phone2: data.phone2,
                 email: data.email,
                 address: data.address,
-                whatsappNumber: data.whatsappNumber
+                whatsappNumber: data.whatsappNumber,
+                googleMapsEmbedUrl: data.googleMapsEmbedUrl
             }
         });
 

@@ -8,7 +8,8 @@ export default function ContactPage() {
         phone1: '+90 555 555 55 55',
         phone2: '+90 212 222 22 22',
         email: 'info@42turizm.com',
-        address: 'Örnek Mahallesi, Turizm Caddesi No: 42<br />Kadıköy / İstanbul'
+        address: 'Örnek Mahallesi, Turizm Caddesi No: 42<br />Kadıköy / İstanbul',
+        googleMapsEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.650490010629!2d29.02330777648564!3d40.99049997135111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab86104d49651%3A0xe62c866d9f041d8e!2sKad%C4%B1k%C3%B6y%20R%C4%B1ht%C4%B1m!5e0!3m2!1str!2str!4v1709650000000!5m2!1str!2str'
     });
 
     useEffect(() => {
@@ -21,7 +22,8 @@ export default function ContactPage() {
                         phone1: data.data.phone1 || '+90 555 555 55 55',
                         phone2: data.data.phone2 || '+90 212 222 22 22',
                         email: data.data.email || 'info@42turizm.com',
-                        address: data.data.address || 'Örnek Mahallesi, Turizm Caddesi No: 42<br />Kadıköy / İstanbul'
+                        address: data.data.address || 'Örnek Mahallesi, Turizm Caddesi No: 42<br />Kadıköy / İstanbul',
+                        googleMapsEmbedUrl: data.data.googleMapsEmbedUrl || 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.650490010629!2d29.02330777648564!3d40.99049997135111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab86104d49651%3A0xe62c866d9f041d8e!2sKad%C4%B1k%C3%B6y%20R%C4%B1ht%C4%B1m!5e0!3m2!1str!2str!4v1709650000000!5m2!1str!2str'
                     });
                 }
             } catch (error) {
@@ -238,7 +240,7 @@ export default function ContactPage() {
             {/* Map Section */}
             <div className="w-full h-[400px] bg-gray-200">
                 <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.650490010629!2d29.02330777648564!3d40.99049997135111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab86104d49651%3A0xe62c866d9f041d8e!2sKad%C4%B1k%C3%B6y%20R%C4%B1ht%C4%B1m!5e0!3m2!1str!2str!4v1709650000000!5m2!1str!2str"
+                    src={contactInfo.googleMapsEmbedUrl}
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}

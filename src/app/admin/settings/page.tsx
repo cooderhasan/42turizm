@@ -136,6 +136,19 @@ export default function SettingsPage() {
                                 💡 Türkiye için: 90 + telefon numarası (örn: 905551234567)
                             </p>
                         </div>
+                        <div className="md:col-span-2">
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Google Haritalar Embed URL</label>
+                            <input
+                                type="url"
+                                name="googleMapsEmbedUrl"
+                                defaultValue={initialData.googleMapsEmbedUrl || ''}
+                                placeholder="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.650490010629!2d29.02330777648564!3d40.99049997135111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab86104d49651%3A0xe62c866d9f041d8e!2sKad%C4%B1k%C3%B6y%20R%C4%B1ht%C4%B1m!5e0!3m2!1str!2str!4v1709650000000!5m2!1str!2str"
+                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
+                            />
+                            <p className="text-xs text-gray-500 mt-1">
+                                💡 Google Haritalar embed URL'si (Google Haritalar {'>'} Paylaş {'>'} Haritayı göm)
+                            </p>
+                        </div>
                     </div>
                 </div>
 

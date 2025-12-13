@@ -55,6 +55,7 @@ export async function updateSettings(prevState: any, formData: FormData) {
         const linkedinUrl = formData.get('linkedinUrl') as string;
         const videoUrl = formData.get('videoUrl') as string;
         const videoThumbnailUrl = formData.get('videoThumbnailUrl') as string;
+        const googleMapsEmbedUrl = formData.get('googleMapsEmbedUrl') as string;
 
         const logoFile = formData.get('logoFile') as File;
         const existingLogoUrl = formData.get('logoFile_current') as string;
@@ -86,6 +87,7 @@ export async function updateSettings(prevState: any, formData: FormData) {
                 linkedinUrl,
                 videoUrl,
                 videoThumbnailUrl,
+                googleMapsEmbedUrl,
                 logoUrl
             });
         } else {
@@ -106,6 +108,7 @@ export async function updateSettings(prevState: any, formData: FormData) {
                     linkedinUrl,
                     videoUrl,
                     videoThumbnailUrl,
+                    googleMapsEmbedUrl,
                     logoUrl,
                     updatedAt: new Date(),
                 })
