@@ -290,7 +290,7 @@ export default async function ServiceDetailPage({ searchParams, params }: { sear
                                 <h3 className="font-bold">Hizmet Bölgesi</h3>
                             </div>
                             <p className="text-gray-600">
-                                İstanbul genelinde (Anadolu ve Avrupa yakası) ve talep üzerine çevre illerde hizmet vermekteyiz.
+                                {service.serviceArea || 'Konya genelinde ve talep üzerine tüm Türkiye\'de hizmet vermekteyiz.'}
                             </p>
                         </div>
 

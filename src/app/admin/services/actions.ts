@@ -58,6 +58,7 @@ export async function createService(prevState: any, formData: FormData) {
         // const imageUrl = formData.get('imageUrl') as string;
         const imageFile = formData.get('image') as File;
         const iconName = formData.get('iconName') as string;
+        const serviceArea = formData.get('serviceArea') as string;
 
         // Handle Image Upload
         let imageUrl = '';
@@ -83,6 +84,7 @@ export async function createService(prevState: any, formData: FormData) {
             imageUrl,
             iconName,
             features,
+            serviceArea,
             isActive,
             order,
         });
@@ -107,6 +109,7 @@ export async function updateService(id: number, prevState: any, formData: FormDa
         const imageFile = formData.get('image') as File;
         const existingImageUrl = formData.get('existingImageUrl') as string;
         const iconName = formData.get('iconName') as string;
+        const serviceArea = formData.get('serviceArea') as string;
 
         // Handle Image Upload
         let imageUrl = existingImageUrl;
@@ -133,6 +136,7 @@ export async function updateService(id: number, prevState: any, formData: FormDa
                 imageUrl,
                 iconName,
                 features,
+                serviceArea,
                 isActive,
                 order,
             })

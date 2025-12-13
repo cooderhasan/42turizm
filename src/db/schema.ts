@@ -52,6 +52,7 @@ export const services = pgTable('services', {
     iconName: text('icon_name'),
     imageUrl: text('image_url'),
     features: text('features').array(),
+    serviceArea: text('service_area'), // Added service area field
     isActive: boolean('is_active').default(true),
     order: integer('order').default(0),
     createdAt: timestamp('created_at').defaultNow(),

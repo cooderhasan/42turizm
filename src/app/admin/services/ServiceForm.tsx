@@ -113,6 +113,17 @@ export default function ServiceForm({ initialData, action }: ServiceFormProps) {
                 </div>
 
                 <div className="md:col-span-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Hizmet Bölgesi</label>
+                    <input
+                        type="text"
+                        name="serviceArea"
+                        defaultValue={initialData?.serviceArea || 'Konya genelinde ve talep üzerine tüm Türkiye\'de hizmet vermekteyiz.'}
+                        placeholder="Konya genelinde ve talep üzerine tüm Türkiye'de hizmet vermekteyiz."
+                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
+                    />
+                </div>
+
+                <div className="md:col-span-2">
                     <label className="block text-sm font-medium text-gray-700 mb-1">Özellikler (Her satıra bir özellik)</label>
                     <textarea
                         name="features"
