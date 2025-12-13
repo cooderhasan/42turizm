@@ -194,7 +194,12 @@ export default function SettingsPage() {
                         <RichEditor
                             value={aboutText}
                             onChange={setAboutText}
-                            placeholder="Hakkımızda yazısı..."
+                            placeholder="42 Turizm olarak, 2008 yılından bu yana taşımacılık sektöründe güven ve kaliteyi bir araya getiriyoruz. Modern araç filomuz, deneyimli sürücü kadromuz ve teknolojik altyapımızla personel taşımacılığı, öğrenci servis hizmetleri ve VIP transfer çözümleri sunuyoruz.
+
+• Tam donanımlı ve konforlu araç filosu
+• SRC belgeli, psikoteknik testten geçmiş profesyonel sürücüler
+• 7/24 operasyon ve araç takip desteği
+• Zamanında ve güvenli ulaşım garantisi"
                             height="200px"
                         />
                     </div>
