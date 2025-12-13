@@ -31,7 +31,7 @@ export default function About() {
                     const text = data.data.aboutText;
 
                     // Try to extract features from the text (simple approach)
-                    const featureLines = text.match(/• (.*?)(?=\n•|\n\n|$)/g) || [];
+                    const featureLines = text ? text.match(/• (.*?)(?=\n•|\n\n|$)/g) || [] : [];
                     const extractedFeatures = featureLines.map((f: string) => f.replace('• ', '').trim());
 
                     if (extractedFeatures.length > 0) {
