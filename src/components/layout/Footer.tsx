@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Phone, Mail, MapPin, Instagram, Facebook, Linkedin, ArrowRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 export default function Footer() {
     const pathname = usePathname();
@@ -18,6 +19,8 @@ export default function Footer() {
         email: 'info@42turizm.com',
         address: 'İstanbul, Türkiye'
     });
+    const [logoUrl, setLogoUrl] = useState<string | null>(null);
+    const [logoTimestamp, setLogoTimestamp] = useState(Date.now());
 
     useEffect(() => {
         async function fetchSocialMedia() {
@@ -33,6 +36,22 @@ export default function Footer() {
         }
         fetchSocialMedia();
     }, []);
+
+    useEffect(() => {
+        async function fetchLogo() {
+            try {
+                // Add timestamp to bypass cache
+                const response = await fetch(`/api/settings/logo?t=${logoTimestamp}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setLogoUrl(data.logoUrl);
+                }
+            } catch (error) {
+                console.error('Error fetching logo:', error);
+            }
+        }
+        fetchLogo();
+    }, [logoTimestamp]);
 
     useEffect(() => {
         async function fetchContactInfo() {
@@ -53,6 +72,15 @@ export default function Footer() {
         fetchContactInfo();
     }, []);
 
+    // Refresh logo every 5 minutes to ensure updates are visible
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setLogoTimestamp(Date.now());
+        }, 300000); // 5 minutes
+
+        return () => clearInterval(interval);
+    }, []);
+
     if (isAdmin) return null;
 
     return (
@@ -62,7 +90,13 @@ export default function Footer() {
 
                     {/* Company Info */}
                     <div>
-                        <h2 className="text-2xl font-bold text-white mb-6">42<span className="text-blue-500">Turizm</span></h2>
+                        <Link href="/" className="text-2xl font-bold tracking-tight flex items-center mb-6">
+                            {logoUrl ? (
+                                <Image src={logoUrl} alt="42 Turizm" width={200} height={60} className="h-12 w-auto" />
+                            ) : (
+                                <span className="text-3xl font-bold">42<span className="text-blue-500">Turizm</span></span>
+                            )}
+                        </Link>
                         <p className="mb-6 text-gray-400 leading-relaxed">
                             Konforlu ve güvenli yolculuklarınız için modern araç filomuz ve profesyonel ekibimizle hizmetinizdeyiz.
                         </p>
