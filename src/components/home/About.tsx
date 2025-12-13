@@ -40,8 +40,16 @@ export default function About() {
 
                     // Set the about text (first paragraph)
                     const firstParagraph = text ? text.split('\n\n')[0] || text : '42 Turizm olarak, 2008 yılından bu yana taşımacılık sektöründe güven ve kaliteyi bir araya getiriyoruz. Modern araç filomuz, deneyimli sürücü kadromuz ve teknolojik altyapımızla personel taşımacılığı, öğrenci servis hizmetleri ve VIP transfer çözümleri sunuyoruz.';
-                    // Remove HTML tags from the text
-                    const cleanText = firstParagraph.replace(/<[^>]*>/g, '');
+                    // Remove HTML tags from the text (more comprehensive cleaning)
+                    const cleanText = firstParagraph
+                        .replace(/<[^>]*>/g, '') // Remove all HTML tags
+                        .replace(/&nbsp;/g, ' ') // Replace &nbsp; with space
+                        .replace(/&/g, '&') // Replace & with &
+                        .replace(/</g, '<') // Replace < with <
+                        .replace(/>/g, '>') // Replace > with >
+                        .replace(/"/g, '"') // Replace " with "
+                        .replace(/'/g, "'") // Replace ' with '
+                        .trim();
                     setAboutText(cleanText);
 
                     // Set image and stats if available
