@@ -23,7 +23,15 @@ export async function GET() {
                 email: data.email,
                 address: data.address,
                 whatsappNumber: data.whatsappNumber,
-                googleMapsEmbedUrl: data.googleMapsEmbedUrl
+                googleMapsEmbedUrl: data.googleMapsEmbedUrl,
+                aboutText: data.aboutText,
+                aboutImageUrl: data.aboutImageUrl,
+                stat1Label: data.stat1Label,
+                stat1Value: data.stat1Value,
+                stat2Label: data.stat2Label,
+                stat2Value: data.stat2Value,
+                stat3Label: data.stat3Label,
+                stat3Value: data.stat3Value
             }
         });
 
