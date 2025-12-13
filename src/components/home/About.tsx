@@ -132,8 +132,8 @@ export default function About() {
                         </div>
                         {/* Experience Badge */}
                         <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-blue-600 rounded-full flex flex-col items-center justify-center text-white hidden md:flex border-8 border-white">
-                            <span className="text-5xl font-bold">15</span>
-                            <span className="text-lg font-medium">Yıllık Tecrübe</span>
+                            <span className="text-5xl font-bold">{stats[0]?.value?.replace(/\D/g, '') || '15'}</span>
+                            <span className="text-lg font-medium">{stats[0]?.label || 'Yıllık Tecrübe'}</span>
                         </div>
                     </div>
 
