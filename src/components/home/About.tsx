@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { CheckCircle2, Users, Calendar, Award } from 'lucide-react';
 
@@ -11,6 +11,42 @@ const STATS = [
 ];
 
 export default function About() {
+    const [aboutText, setAboutText] = useState('42 Turizm olarak, 2008 yılından bu yana taşımacılık sektöründe güven ve kaliteyi bir araya getiriyoruz. Modern araç filomuz, deneyimli sürücü kadromuz ve teknolojik altyapımızla personel taşımacılığı, öğrenci servis hizmetleri ve VIP transfer çözümleri sunuyoruz.');
+    const [features, setFeatures] = useState([
+        'Tam donanımlı ve konforlu araç filosu',
+        'SRC belgeli, psikoteknik testten geçmiş profesyonel sürücüler',
+        '7/24 operasyon ve araç takip desteği',
+        'Zamanında ve güvenli ulaşım garantisi'
+    ]);
+
+    useEffect(() => {
+        async function fetchAboutData() {
+            try {
+                const response = await fetch('/api/settings/contact-info');
+                const data = await response.json();
+                if (data.success && data.data && data.data.aboutText) {
+                    // Parse the about text to extract features if needed
+                    const text = data.data.aboutText;
+
+                    // Try to extract features from the text (simple approach)
+                    const featureLines = text.match(/• (.*?)(?=\n•|\n\n|$)/g) || [];
+                    const extractedFeatures = featureLines.map((f: string) => f.replace('• ', '').trim());
+
+                    if (extractedFeatures.length > 0) {
+                        setFeatures(extractedFeatures.slice(0, 4));
+                    }
+
+                    // Set the about text (first paragraph)
+                    const firstParagraph = text.split('\n\n')[0] || text;
+                    setAboutText(firstParagraph);
+                }
+            } catch (error) {
+                console.error('Error fetching about data:', error);
+            }
+        }
+        fetchAboutData();
+    }, []);
+
     return (
         <section className="py-24 bg-white overflow-hidden">
             <div className="container mx-auto px-4">
@@ -42,9 +78,7 @@ export default function About() {
                         </h2>
 
                         <p className="text-gray-600 text-lg mb-8 leading-relaxed">
-                            42 Turizm olarak, 2008 yılından bu yana taşımacılık sektöründe güven ve kaliteyi bir araya getiriyoruz.
-                            Modern araç filomuz, deneyimli sürücü kadromuz ve teknolojik altyapımızla personel taşımacılığı,
-                            öğrenci servis hizmetleri ve VIP transfer çözümleri sunuyoruz.
+                            {aboutText}
                         </p>
 
                         <div className="space-y-4 mb-10">
