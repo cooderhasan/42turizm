@@ -185,6 +185,81 @@ export default function SettingsPage() {
                     </div>
                 </div>
 
+                {/* About Section Settings */}
+                <div className="space-y-4 pt-4">
+                    <h2 className="text-xl font-semibold text-gray-900 border-b pb-2">Hakkımızda Bölümü Ayarları</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="md:col-span-2">
+                            <ImageUpload
+                                name="aboutImage"
+                                defaultValue={initialData.aboutImageUrl}
+                                label="Hakkımızda Resmi"
+                                sizeHint="Önerilen: 1200x800px .JPG, .PNG"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">İstatistik 1 Etiketi</label>
+                            <input
+                                type="text"
+                                name="stat1Label"
+                                defaultValue={initialData.stat1Label || 'Yıllık Tecrübe'}
+                                placeholder="Yıllık Tecrübe"
+                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">İstatistik 1 Değeri</label>
+                            <input
+                                type="text"
+                                name="stat1Value"
+                                defaultValue={initialData.stat1Value || '15+'}
+                                placeholder="15+"
+                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">İstatistik 2 Etiketi</label>
+                            <input
+                                type="text"
+                                name="stat2Label"
+                                defaultValue={initialData.stat2Label || 'Mutlu Müşteri'}
+                                placeholder="Mutlu Müşteri"
+                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">İstatistik 2 Değeri</label>
+                            <input
+                                type="text"
+                                name="stat2Value"
+                                defaultValue={initialData.stat2Value || '10k+'}
+                                placeholder="10k+"
+                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">İstatistik 3 Etiketi</label>
+                            <input
+                                type="text"
+                                name="stat3Label"
+                                defaultValue={initialData.stat3Label || 'Araç Filosu'}
+                                placeholder="Araç Filosu"
+                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">İstatistik 3 Değeri</label>
+                            <input
+                                type="text"
+                                name="stat3Value"
+                                defaultValue={initialData.stat3Value || '50+'}
+                                placeholder="50+"
+                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
+                            />
+                        </div>
+                    </div>
+                </div>
+
                 {/* Corporate Texts */}
                 <div className="space-y-4 pt-4">
                     <h2 className="text-xl font-semibold text-gray-900 border-b pb-2">Kurumsal Metinler</h2>

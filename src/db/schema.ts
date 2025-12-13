@@ -28,6 +28,13 @@ export const settings = pgTable('settings', {
     videoThumbnailUrl: text('video_thumbnail_url'), // Added video thumbnail URL
     logoUrl: text('logo_url'), // Added logoUrl
     googleMapsEmbedUrl: text('google_maps_embed_url'), // Added Google Maps embed URL
+    aboutImageUrl: text('about_image_url'), // Added About section image URL
+    stat1Label: text('stat1_label'), // Added stat labels
+    stat1Value: text('stat1_value'),
+    stat2Label: text('stat2_label'),
+    stat2Value: text('stat2_value'),
+    stat3Label: text('stat3_label'),
+    stat3Value: text('stat3_value'),
     updatedAt: timestamp('updated_at').defaultNow(),
 });
 

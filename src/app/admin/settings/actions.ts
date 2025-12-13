@@ -7,24 +7,24 @@ import { revalidatePath } from 'next/cache';
 import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';
 
-async function saveImage(file: File): Promise<string | null> {
+async function saveImage(file: File, uploadDirName: string): Promise<string | null> {
     if (!file || file.size === 0) return null;
 
     try {
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
 
-        const uploadDir = join(process.cwd(), 'public', 'uploads', 'logo');
+        const uploadDir = join(process.cwd(), 'public', 'uploads', uploadDirName);
         await mkdir(uploadDir, { recursive: true });
 
         const filename = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '')}`;
         const filepath = join(uploadDir, filename);
 
         await writeFile(filepath, buffer);
-        return `/uploads/logo/${filename}`;
+        return `/uploads/${uploadDirName}/${filename}`;
     } catch (error) {
-        console.error('Error saving logo:', error);
-        throw new Error('Logo kaydedilemedi.');
+        console.error('Error saving image:', error);
+        throw new Error('Görsel kaydedilemedi.');
     }
 }
 
@@ -56,6 +56,14 @@ export async function updateSettings(prevState: any, formData: FormData) {
         const videoUrl = formData.get('videoUrl') as string;
         const videoThumbnailUrl = formData.get('videoThumbnailUrl') as string;
         const googleMapsEmbedUrl = formData.get('googleMapsEmbedUrl') as string;
+        const aboutImageFile = formData.get('aboutImage') as File;
+        const existingAboutImageUrl = formData.get('aboutImage_current') as string;
+        const stat1Label = formData.get('stat1Label') as string;
+        const stat1Value = formData.get('stat1Value') as string;
+        const stat2Label = formData.get('stat2Label') as string;
+        const stat2Value = formData.get('stat2Value') as string;
+        const stat3Label = formData.get('stat3Label') as string;
+        const stat3Value = formData.get('stat3Value') as string;
 
         const logoFile = formData.get('logoFile') as File;
         const existingLogoUrl = formData.get('logoFile_current') as string;
@@ -63,8 +71,15 @@ export async function updateSettings(prevState: any, formData: FormData) {
         // Handle Logo Upload
         let logoUrl = existingLogoUrl;
         if (logoFile && logoFile.size > 0) {
-            const savedPath = await saveImage(logoFile);
+            const savedPath = await saveImage(logoFile, 'logo');
             if (savedPath) logoUrl = savedPath;
+        }
+
+        // Handle About Image Upload
+        let aboutImageUrl = existingAboutImageUrl;
+        if (aboutImageFile && aboutImageFile.size > 0) {
+            const savedPath = await saveImage(aboutImageFile, 'about');
+            if (savedPath) aboutImageUrl = savedPath;
         }
 
         // Check if settings exist to update or insert
@@ -110,6 +125,13 @@ export async function updateSettings(prevState: any, formData: FormData) {
                     videoThumbnailUrl,
                     googleMapsEmbedUrl,
                     logoUrl,
+                    aboutImageUrl,
+                    stat1Label,
+                    stat1Value,
+                    stat2Label,
+                    stat2Value,
+                    stat3Label,
+                    stat3Value,
                     updatedAt: new Date(),
                 })
                 .where(eq(settings.id, existing[0].id));

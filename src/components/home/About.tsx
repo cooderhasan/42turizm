@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { CheckCircle2, Users, Calendar, Award } from 'lucide-react';
 
-const STATS = [
+const DEFAULT_STATS = [
     { label: 'Yıllık Tecrübe', value: '15+', icon: Calendar },
     { label: 'Mutlu Müşteri', value: '10k+', icon: Users },
     { label: 'Araç Filosu', value: '50+', icon: Award },
@@ -18,6 +18,63 @@ export default function About() {
         '7/24 operasyon ve araç takip desteği',
         'Zamanında ve güvenli ulaşım garantisi'
     ]);
+    const [aboutImageUrl, setAboutImageUrl] = useState('https://images.unsplash.com/photo-1556125574-d7f27ec36a06?q=80&w=2070&auto=format&fit=crop');
+    const [stats, setStats] = useState(DEFAULT_STATS);
+
+    useEffect(() => {
+        async function fetchAboutData() {
+            try {
+                const response = await fetch('/api/settings/contact-info');
+                const data = await response.json();
+                if (data.success && data.data) {
+                    // Parse the about text to extract features if needed
+                    const text = data.data.aboutText;
+
+                    // Try to extract features from the text (simple approach)
+                    const featureLines = text.match(/• (.*?)(?=\n•|\n\n|$)/g) || [];
+                    const extractedFeatures = featureLines.map((f: string) => f.replace('• ', '').trim());
+
+                    if (extractedFeatures.length > 0) {
+                        setFeatures(extractedFeatures.slice(0, 4));
+                    }
+
+                    // Set the about text (first paragraph)
+                    const firstParagraph = text.split('\n\n')[0] || text;
+                    setAboutText(firstParagraph);
+
+                    // Set image and stats if available
+                    if (data.data.aboutImageUrl) {
+                        setAboutImageUrl(data.data.aboutImageUrl);
+                    }
+
+                    // Set stats if available
+                    if (data.data.stat1Label && data.data.stat1Value) {
+                        const customStats = [
+                            {
+                                label: data.data.stat1Label,
+                                value: data.data.stat1Value,
+                                icon: Calendar
+                            },
+                            {
+                                label: data.data.stat2Label || DEFAULT_STATS[1].label,
+                                value: data.data.stat2Value || DEFAULT_STATS[1].value,
+                                icon: Users
+                            },
+                            {
+                                label: data.data.stat3Label || DEFAULT_STATS[2].label,
+                                value: data.data.stat3Value || DEFAULT_STATS[2].value,
+                                icon: Award
+                            }
+                        ];
+                        setStats(customStats);
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching about data:', error);
+            }
+        }
+        fetchAboutData();
+    }, []);
 
     useEffect(() => {
         async function fetchAboutData() {
@@ -56,7 +113,7 @@ export default function About() {
                     <div className="w-full lg:w-1/2 relative">
                         <div className="relative h-[600px] w-full rounded-2xl overflow-hidden shadow-2xl">
                             <Image
-                                src="https://images.unsplash.com/photo-1556125574-d7f27ec36a06?q=80&w=2070&auto=format&fit=crop"
+                                src={aboutImageUrl}
                                 alt="42 Turizm Ofis ve Araçlar"
                                 fill
                                 className="object-cover"
@@ -99,7 +156,7 @@ export default function About() {
 
                         {/* Stats Grid */}
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-6 pt-8 border-t border-gray-100">
-                            {STATS.map((stat, index) => (
+                            {stats.map((stat, index) => (
                                 <div key={index} className="text-center md:text-left">
                                     <div className="text-3xl font-bold text-gray-900 mb-1">{stat.value}</div>
                                     <div className="text-sm text-gray-500 font-medium uppercase tracking-wider">{stat.label}</div>
