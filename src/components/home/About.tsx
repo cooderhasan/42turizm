@@ -39,7 +39,7 @@ export default function About() {
                     }
 
                     // Set the about text (first paragraph)
-                    const firstParagraph = text.split('\n\n')[0] || text;
+                    const firstParagraph = text ? text.split('\n\n')[0] || text : '42 Turizm olarak, 2008 yılından bu yana taşımacılık sektöründe güven ve kaliteyi bir araya getiriyoruz. Modern araç filomuz, deneyimli sürücü kadromuz ve teknolojik altyapımızla personel taşımacılığı, öğrenci servis hizmetleri ve VIP transfer çözümleri sunuyoruz.';
                     setAboutText(firstParagraph);
 
                     // Set image and stats if available
