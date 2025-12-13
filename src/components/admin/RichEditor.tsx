@@ -26,12 +26,19 @@ export default function RichEditor({ value, onChange, placeholder, height = '300
         ],
     }), []);
 
+    // Clean HTML tags from the value before displaying
+    const displayValue = value.replace(/<[^>]*>/g, '');
+
     return (
         <div className="bg-white">
             <ReactQuill
                 theme="snow"
-                value={value}
-                onChange={onChange}
+                value={displayValue}
+                onChange={(newValue) => {
+                    // Clean HTML tags from the new value before saving
+                    const cleanedValue = newValue.replace(/<[^>]*>/g, '');
+                    onChange(cleanedValue);
+                }}
                 modules={modules}
                 placeholder={placeholder}
                 style={{ height: height, marginBottom: '50px' }} // Margin for toolbar
