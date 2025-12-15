@@ -30,9 +30,9 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
     }
 }
 
-export async function PATCH(request: Request, { params }: { params: { id: string } }) {
+export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
     try {
-        const id = params.id;
+        const { id } = await params;
 
         if (!id) {
             return NextResponse.json({
