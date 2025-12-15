@@ -8,9 +8,9 @@ export default function AdminLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="min-h-screen bg-gray-100 flex">
+        <div className="min-h-screen bg-gray-100 flex relative">
             {/* Sidebar */}
-            <aside className="w-64 bg-[#0a192f] text-gray-300 flex flex-col fixed h-full z-10 transition-all duration-300">
+            <aside className="w-64 bg-[#0a192f] text-gray-300 flex flex-col fixed top-0 left-0 bottom-0 h-screen z-10 transition-all duration-300">
                 <div className="p-6 border-b border-gray-700">
                     <h1 className="text-2xl font-bold text-white">
                         42<span className="text-blue-500"> Turizm Yönetim Paneli</span>
@@ -107,27 +107,27 @@ export default function AdminLayout({
                     </Link>
                 </nav>
 
-                <div className="p-4 border-t border-gray-700">
+                <div className="p-4 border-t border-gray-700 mt-auto mb-2 flex gap-2">
                     <Link
                         href="/"
                         target="_blank"
-                        className="flex items-center gap-3 px-4 py-3 rounded-lg text-green-400 hover:bg-white/10 transition-colors mb-2"
+                        className="flex-1 flex justify-center items-center gap-2 px-2 py-2 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition-colors text-sm"
                     >
-                        <Home size={20} />
-                        <span>Siteye Git</span>
+                        <Home size={18} />
+                        <span className="truncate">Siteye Git</span>
                     </Link>
 
-                    <form action={logout}>
-                        <button type="submit" className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-white/10 transition-colors">
-                            <LogOut size={20} />
-                            <span>Çıkış Yap</span>
+                    <form action={logout} className="flex-1">
+                        <button type="submit" className="w-full flex justify-center items-center gap-2 px-2 py-2 rounded-lg text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-colors text-sm">
+                            <LogOut size={18} />
+                            <span className="truncate">Çıkış</span>
                         </button>
                     </form>
                 </div>
             </aside>
 
             {/* Main Content Area */}
-            <main className="flex-1 ml-64 p-8">
+            <main className="flex-1 ml-64 p-8 min-h-screen">
                 {children}
             </main>
         </div>
