@@ -103,7 +103,7 @@ export default function Services() {
                                         {/* This assumes icons passed in are rendered white or inherit colour. 
                                            Since we are replacing the logic, let's just make sure the icon logic above uses appropriate classes.
                                         */}
-                                        {React.cloneElement(service.icon as React.ReactElement, { className: "w-7 h-7 text-white" })}
+                                        {React.cloneElement(service.icon as React.ReactElement<any>, { className: "w-7 h-7 text-white" })}
                                     </div>
                                 </div>
                             </div>
