@@ -26,7 +26,7 @@ export default function TestimonialsPage() {
         fetchTestimonials();
     }, []);
 
-    const handleDelete = async (id) => {
+    const handleDelete = async (id: number) => {
         if (confirm('Bu yorumu silmek istediğinize emin misiniz?')) {
             try {
                 await deleteTestimonial(id);
