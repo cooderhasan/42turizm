@@ -43,8 +43,8 @@ export default function FleetClient({ vehicles }: FleetClientProps) {
                         key={cat.id}
                         onClick={() => setActiveCategory(cat.id)}
                         className={`px-6 py-3 rounded-lg font-medium transition-all ${activeCategory === cat.id
-                            ? 'bg-blue-600 text-white shadow-md'
-                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                            ? 'bg-[#d4af37] text-white shadow-md'
+                            : 'bg-gray-100 text-[#0f172a] hover:bg-gray-200'
                             }`}
                     >
                         {cat.label}
@@ -55,7 +55,7 @@ export default function FleetClient({ vehicles }: FleetClientProps) {
             {/* Vehicles Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {filteredVehicles.map((vehicle) => (
-                    <div key={vehicle.id} className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group">
+                    <div key={vehicle.id} className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group border border-gray-100 hover:border-[#d4af37]/30">
                         <div className="relative h-56 overflow-hidden">
                             {vehicle.imageUrl && (
                                 <Image
@@ -65,36 +65,36 @@ export default function FleetClient({ vehicles }: FleetClientProps) {
                                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                                 />
                             )}
-                            <div className="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-gray-800 uppercase">
+                            <div className="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-[#0f172a] uppercase">
                                 {CATEGORIES.find(c => c.id === vehicle.category)?.label || vehicle.category}
                             </div>
                         </div>
 
                         <div className="p-6">
-                            <h3 className="text-xl font-bold text-gray-900 mb-4">{vehicle.name}</h3>
+                            <h3 className="text-xl font-bold text-[#0f172a] mb-4 group-hover:text-[#d4af37] transition-colors">{vehicle.name}</h3>
 
                             <div className="space-y-2">
                                 {vehicle.capacity && (
                                     <div className="flex items-center gap-3 text-gray-600">
-                                        <Users size={18} className="text-blue-500" />
+                                        <Users size={18} className="text-[#d4af37]" />
                                         <span>{vehicle.capacity} Yolcu</span>
                                     </div>
                                 )}
                                 {vehicle.fuelType && (
                                     <div className="flex items-center gap-3 text-gray-600">
-                                        <Fuel size={18} className="text-blue-500" />
+                                        <Fuel size={18} className="text-[#d4af37]" />
                                         <span>{vehicle.fuelType}</span>
                                     </div>
                                 )}
                                 {vehicle.driverOption && (
                                     <div className="flex items-center gap-3 text-gray-600">
-                                        <Briefcase size={18} className="text-blue-500" />
+                                        <Briefcase size={18} className="text-[#d4af37]" />
                                         <span>{vehicle.driverOption}</span>
                                     </div>
                                 )}
                             </div>
 
-                            <a href="/iletisim" className="block w-full mt-6 bg-gray-900 text-white py-3 rounded-lg font-medium hover:bg-blue-600 transition-colors text-center">
+                            <a href="/iletisim" className="block w-full mt-6 bg-[#0f172a] text-white py-3 rounded-lg font-medium hover:bg-[#d4af37] transition-colors text-center shadow-md hover:shadow-lg">
                                 Bilgi Al
                             </a>
                         </div>

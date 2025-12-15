@@ -21,7 +21,8 @@ export default function References() {
     return (
         <section className="py-16 bg-gray-50 border-t border-gray-200">
             <div className="container mx-auto px-4">
-                <p className="text-center text-gray-500 font-medium mb-10 text-lg">Bize Güvenen İş Ortaklarımız</p>
+                <p className="text-center text-[#d4af37] font-bold tracking-widest uppercase text-sm mb-2">Referanslarımız</p>
+                <h2 className="text-3xl font-bold text-center text-[#0f172a] mb-10">Bize Güvenen İş Ortaklarımız</h2>
 
                 <div className="embla overflow-hidden" ref={emblaRef}>
                     <div className="embla__container flex items-center">

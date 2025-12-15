@@ -33,8 +33,8 @@ export default function ReferenceList({ references }: { references: Reference[] 
                         key={cat.id}
                         onClick={() => setActiveCategory(cat.id)}
                         className={`px-6 py-3 rounded-lg font-medium transition-all flex items-center gap-2 ${activeCategory === cat.id
-                            ? 'bg-blue-600 text-white shadow-md'
-                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                            ? 'bg-[#d4af37] text-white shadow-md'
+                            : 'bg-gray-100 text-[#0f172a] hover:bg-gray-200'
                             }`}
                     >
                         {cat.icon && <cat.icon size={18} />}
@@ -53,7 +53,7 @@ export default function ReferenceList({ references }: { references: Reference[] 
                     filteredRefs.map((ref) => (
                         <div
                             key={ref.id}
-                            className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-100 flex flex-col items-center justify-center text-center group"
+                            className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-100 flex flex-col items-center justify-center text-center group hover:border-[#d4af37]/30"
                         >
                             <div className="relative w-full aspect-[3/2] mb-4 grayscale group-hover:grayscale-0 transition-all opacity-70 group-hover:opacity-100">
                                 {ref.imageUrl ? (
@@ -69,8 +69,8 @@ export default function ReferenceList({ references }: { references: Reference[] 
                                     </div>
                                 )}
                             </div>
-                            <h3 className="font-semibold text-gray-800">{ref.name}</h3>
-                            <span className="text-xs text-blue-500 font-medium mt-1 uppercase">
+                            <h3 className="font-semibold text-[#0f172a]">{ref.name}</h3>
+                            <span className="text-xs text-[#d4af37] font-bold mt-1 uppercase tracking-wide">
                                 {CATEGORIES.find(c => c.id === ref.category)?.label || 'Genel'}
                             </span>
                         </div>

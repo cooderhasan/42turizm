@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
+import Autoplay from 'embla-carousel-autoplay';
 import { Star, Quote } from 'lucide-react';
 import Image from 'next/image';
 
@@ -16,7 +17,7 @@ interface Testimonial {
 }
 
 export default function Testimonials() {
-    const [emblaRef] = useEmblaCarousel({ align: 'start', loop: true });
+    const [emblaRef] = useEmblaCarousel({ align: 'start', loop: true }, [Autoplay({ delay: 5000, stopOnInteraction: false })]);
     const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -101,51 +102,51 @@ export default function Testimonials() {
     }
 
     return (
-        <section className="py-24 bg-blue-900 text-white relative overflow-hidden">
-            {/* Background Decor */}
-            <div className="absolute top-0 left-0 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 -translate-x-1/2 -translate-y-1/2"></div>
-            <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 translate-x-1/3 translate-y-1/3"></div>
+        <section className="py-24 bg-[#0f172a] text-white relative overflow-hidden">
+            {/* Background decoration */}
+            <div className="absolute top-0 left-0 w-64 h-64 bg-[#d4af37] rounded-full mix-blend-multiply filter blur-3xl opacity-10 -translate-x-1/2 -translate-y-1/2"></div>
+            <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#d4af37] rounded-full mix-blend-multiply filter blur-3xl opacity-10 translate-x-1/3 translate-y-1/3"></div>
 
             <div className="container mx-auto px-4 relative z-10">
-                <div className="text-center mb-16">
-                    <h2 className="text-blue-300 font-semibold tracking-wide uppercase text-sm mb-3">Müşteri Yorumları</h2>
-                    <h3 className="text-3xl md:text-4xl font-bold mb-6">Sizden Gelen Geri Bildirimler</h3>
+                <div className="text-center max-w-3xl mx-auto mb-16">
+                    <h2 className="text-[#d4af37] font-semibold tracking-wide uppercase text-sm mb-3">Müşteri Yorumları</h2>
+                    <h3 className="text-4xl font-bold mb-6">Müşterilerimiz Ne Diyor?</h3>
+                    <p className="text-gray-300 text-lg">
+                        Hizmet verdiğimiz kurum ve kuruluşların hakkımızdaki düşünceleri bizim için en büyük referanstır.
+                    </p>
                 </div>
 
-                <div className="embla overflow-hidden cursor-grab active:cursor-grabbing" ref={emblaRef}>
-                    <div className="embla__container flex">
-                        {activeTestimonials.map((review) => (
-                            <div className="embla__slide flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0 pl-6" key={review.id}>
-                                <div className="bg-white/10 backdrop-blur-md border border-white/10 p-8 rounded-2xl h-full flex flex-col">
-                                    <Quote className="text-blue-400 w-10 h-10 mb-6 opacity-50" />
-                                    <p className="text-lg text-gray-200 mb-8 italic flex-grow">"{review.content}"</p>
-
-                                    <div className="flex items-center gap-4 mt-auto">
-                                        <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-blue-400">
-                                            <Image
-                                                src={review.imageUrl}
-                                                alt={review.name}
-                                                fill
-                                                className="object-cover"
-                                            />
+                <div className="relative w-full mx-auto">
+                    <div className="overflow-hidden" ref={emblaRef}>
+                        <div className="flex -ml-4">
+                            {activeTestimonials.map((review) => (
+                                <div key={review.id} className="flex-[0_0_100%] md:flex-[0_0_50%] pl-4 min-w-0">
+                                    <div className="bg-[#1e293b] p-8 rounded-2xl relative h-full border border-gray-800 hover:border-[#d4af37]/30 transition-colors group">
+                                        <Quote className="text-[#d4af37] w-10 h-10 mb-6 opacity-30 group-hover:opacity-100 transition-opacity" />
+                                        <p className="text-gray-300 mb-8 leading-relaxed italic">
+                                            "{review.content}"
+                                        </p>
+                                        <div className="flex items-center gap-4 mt-auto">
+                                            <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-[#d4af37]">
+                                                {/* Placeholder for user image if needed, or keeping it distinct */}
+                                                <div className="bg-gray-700 w-full h-full flex items-center justify-center text-xl font-bold text-gray-400">
+                                                    {review.name.charAt(0)}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h4 className="font-bold text-white">{review.name}</h4>
+                                                <span className="text-sm text-[#d4af37]/80">{review.title}</span>
+                                            </div>
+                                            <div className="ml-auto flex">
+                                                {[...Array(5)].map((_, i) => (
+                                                    <Star key={i} className="w-4 h-4 text-[#d4af37] fill-[#d4af37]" />
+                                                ))}
+                                            </div>
                                         </div>
-                                        <div>
-                                            <h5 className="font-bold text-white">{review.name}</h5>
-                                            <span className="text-sm text-blue-300">{review.title}</span>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex gap-1 mt-4">
-                                        {[...Array(review.rating)].map((_, i) => (
-                                            <Star key={i} className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                                        ))}
-                                        {[...Array(5 - review.rating)].map((_, i) => (
-                                            <Star key={`empty-${i}`} className="w-4 h-4 text-yellow-500" />
-                                        ))}
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>

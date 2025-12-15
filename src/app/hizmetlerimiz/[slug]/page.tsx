@@ -96,18 +96,18 @@ export default async function ServiceDetailPage({ searchParams, params }: { sear
         return (
             <div className="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
                 {/* Gallery Header */}
-                <div className="bg-white shadow-lg sticky top-16 z-40 border-b-2 border-blue-100">
+                <div className="bg-white shadow-lg sticky top-16 z-40 border-b-2 border-[#d4af37]/20">
                     <div className="container mx-auto px-8 md:px-16 py-8">
                         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-                            <Link href={`/hizmetlerimiz/${slug}`} className="flex items-center gap-3 text-gray-700 hover:text-blue-600 transition-colors group">
-                                <div className="p-3 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 group-hover:from-blue-100 group-hover:to-blue-200 transition-all shadow-md">
-                                    <ArrowLeft size={24} className="text-blue-600" />
+                            <Link href={`/hizmetlerimiz/${slug}`} className="flex items-center gap-3 text-gray-700 hover:text-[#d4af37] transition-colors group">
+                                <div className="p-3 rounded-xl bg-gray-50 group-hover:bg-[#d4af37]/10 transition-all shadow-md">
+                                    <ArrowLeft size={24} className="text-[#0f172a] group-hover:text-[#d4af37]" />
                                 </div>
                                 <span className="text-xl font-bold">Turlara Dön</span>
                             </Link>
-                            <div className="flex items-center gap-4 bg-gradient-to-r from-blue-50 to-purple-50 px-6 py-5 rounded-xl mt-3">
-                                <Camera className="text-blue-600 flex-shrink-0" size={28} />
-                                <h1 className="text-xl font-bold text-gray-900">{activeTour.title}</h1>
+                            <div className="flex items-center gap-4 bg-gray-50 px-6 py-5 rounded-xl mt-3 border border-gray-100">
+                                <Camera className="text-[#d4af37] flex-shrink-0" size={28} />
+                                <h1 className="text-xl font-bold text-[#0f172a]">{activeTour.title}</h1>
                             </div>
                         </div>
                     </div>
@@ -199,11 +199,11 @@ export default async function ServiceDetailPage({ searchParams, params }: { sear
                                     <h3 className="text-xl font-bold text-gray-900 mb-6">Neden Bizi Tercih Etmelisiniz?</h3>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {service.features.map((feature: string, index: number) => (
-                                            <div key={index} className="flex items-center gap-3 bg-gray-50 p-4 rounded-xl">
-                                                <div className="bg-green-100 p-2 rounded-full">
-                                                    <CheckCircle2 className="text-green-600" size={20} />
+                                            <div key={index} className="flex items-center gap-3 bg-gray-50 p-4 rounded-xl border border-gray-100 hover:border-[#d4af37]/30 transition-colors">
+                                                <div className="bg-[#d4af37]/10 p-2 rounded-full">
+                                                    <CheckCircle2 className="text-[#d4af37]" size={20} />
                                                 </div>
-                                                <span className="font-medium text-gray-700">{feature}</span>
+                                                <span className="font-medium text-[#0f172a]">{feature}</span>
                                             </div>
                                         ))}
                                     </div>
@@ -214,25 +214,25 @@ export default async function ServiceDetailPage({ searchParams, params }: { sear
                         {/* Cultural Tours Special Section: Sub-Tours Grid (NOW DYNAMIC) */}
                         {isCulturalTours && (
                             <div className="bg-white rounded-3xl p-8 md:p-12 shadow-xl">
-                                <h2 className="text-2xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-                                    <Camera className="text-blue-600" />
+                                <h2 className="text-2xl font-bold text-[#0f172a] mb-8 flex items-center gap-3">
+                                    <Camera className="text-[#d4af37]" />
                                     Popüler Tur Rotalarımız
                                 </h2>
 
                                 {dbTours.length > 0 ? (
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         {dbTours.map((pkg) => (
-                                            <Link key={pkg.id} href={`/hizmetlerimiz/${slug}?gallery=${pkg.id}`} className="group relative h-64 rounded-2xl overflow-hidden cursor-pointer shadow-md hover:shadow-2xl transition-all duration-300">
+                                            <Link key={pkg.id} href={`/hizmetlerimiz/${slug}?gallery=${pkg.id}`} className="group relative h-64 rounded-2xl overflow-hidden cursor-pointer shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-200 hover:border-[#d4af37]">
                                                 <Image
                                                     src={pkg.coverImage || 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800'}
                                                     alt={pkg.title}
                                                     fill
                                                     className="object-cover group-hover:scale-110 transition-transform duration-700"
                                                 />
-                                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
+                                                <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a]/90 via-[#0f172a]/20 to-transparent">
                                                     <div className="absolute bottom-0 left-0 w-full p-6">
-                                                        <h3 className="text-white text-xl font-bold mb-1 group-hover:text-blue-300 transition-colors">{pkg.title}</h3>
-                                                        <div className="flex items-center gap-2 text-gray-300 text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                                                        <h3 className="text-white text-xl font-bold mb-1 group-hover:text-[#d4af37] transition-colors">{pkg.title}</h3>
+                                                        <div className="flex items-center gap-2 text-[#d4af37] text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 font-bold">
                                                             <Camera size={16} />
                                                             <span>Galeriyi İncele</span>
                                                         </div>
@@ -254,31 +254,31 @@ export default async function ServiceDetailPage({ searchParams, params }: { sear
                     <div className="lg:col-span-1 space-y-6">
 
                         {/* Contact Box */}
-                        <div className="bg-blue-600 rounded-3xl p-8 text-white shadow-xl">
-                            <h3 className="text-2xl font-bold mb-6">Hemen Teklif Alın</h3>
-                            <p className="text-blue-100 mb-8">
+                        <div className="bg-[#0f172a] rounded-3xl p-8 text-white shadow-xl">
+                            <h3 className="text-2xl font-bold mb-6 text-[#d4af37]">Hemen Teklif Alın</h3>
+                            <p className="text-gray-300 mb-8">
                                 Hizmetlerimiz hakkında detaylı bilgi ve size özel fiyat teklifi için bizimle iletişime geçin.
                             </p>
 
                             <div className="space-y-4">
-                                <a href={`tel:${contactInfo.phone1}`} className="flex items-center gap-4 bg-white/10 p-4 rounded-xl hover:bg-white/20 transition-colors">
-                                    <Phone className="text-blue-200" />
+                                <a href={`tel:${contactInfo.phone1}`} className="flex items-center gap-4 bg-white/5 p-4 rounded-xl hover:bg-white/10 transition-colors border border-white/10 group">
+                                    <Phone className="text-[#d4af37] group-hover:scale-110 transition-transform" />
                                     <div>
-                                        <div className="text-xs text-blue-200">Bizi Arayın</div>
-                                        <div className="font-bold">{contactInfo.phone1}</div>
+                                        <div className="text-xs text-gray-400">Bizi Arayın</div>
+                                        <div className="font-bold text-white group-hover:text-[#d4af37] transition-colors">{contactInfo.phone1}</div>
                                     </div>
                                 </a>
 
-                                <a href={`mailto:${contactInfo.email}`} className="flex items-center gap-4 bg-white/10 p-4 rounded-xl hover:bg-white/20 transition-colors">
-                                    <Mail className="text-blue-200" />
+                                <a href={`mailto:${contactInfo.email}`} className="flex items-center gap-4 bg-white/5 p-4 rounded-xl hover:bg-white/10 transition-colors border border-white/10 group">
+                                    <Mail className="text-[#d4af37] group-hover:scale-110 transition-transform" />
                                     <div>
-                                        <div className="text-xs text-blue-200">E-posta Gönderin</div>
-                                        <div className="font-bold">{contactInfo.email}</div>
+                                        <div className="text-xs text-gray-400">E-posta Gönderin</div>
+                                        <div className="font-bold text-white group-hover:text-[#d4af37] transition-colors">{contactInfo.email}</div>
                                     </div>
                                 </a>
                             </div>
 
-                            <Link href="/iletisim" className="mt-8 w-full bg-white text-blue-600 py-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 hover:bg-blue-50 transition-colors">
+                            <Link href="/iletisim" className="mt-8 w-full bg-[#d4af37] text-white py-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 hover:bg-[#b5952f] transition-colors">
                                 İletişim Formu <ArrowRight size={20} />
                             </Link>
                         </div>

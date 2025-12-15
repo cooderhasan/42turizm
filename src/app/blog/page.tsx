@@ -40,7 +40,7 @@ export default async function BlogPage() {
                 {posts.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {posts.map((post) => (
-                            <Link key={post.id} href={`/blog/${post.slug}`} className="group bg-gray-50 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col h-full">
+                            <Link key={post.id} href={`/blog/${post.slug}`} className="group bg-gray-50 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-[#d4af37]/50 flex flex-col h-full">
 
                                 {/* Image */}
                                 <div className="relative h-64 overflow-hidden">
@@ -50,7 +50,7 @@ export default async function BlogPage() {
                                         fill
                                         className="object-cover group-hover:scale-110 transition-transform duration-700"
                                     />
-                                    <div className="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                                    <div className="absolute top-4 left-4 bg-[#d4af37] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
                                         Duyuru
                                     </div>
                                 </div>
@@ -59,18 +59,18 @@ export default async function BlogPage() {
                                 <div className="p-8 flex flex-col flex-grow">
                                     <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
                                         <div className="flex items-center gap-1">
-                                            <Calendar size={16} className="text-blue-500" />
+                                            <Calendar size={16} className="text-[#d4af37]" />
                                             <span>{post.publishedAt ? new Date(post.publishedAt).toLocaleDateString('tr-TR') : 'Tarih Yok'}</span>
                                         </div>
                                         {post.author && (
                                             <div className="flex items-center gap-1">
-                                                <User size={16} className="text-blue-500" />
+                                                <User size={16} className="text-[#d4af37]" />
                                                 <span>{post.author}</span>
                                             </div>
                                         )}
                                     </div>
 
-                                    <h2 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors line-clamp-2">
+                                    <h2 className="text-xl font-bold text-[#0f172a] mb-4 group-hover:text-[#d4af37] transition-colors line-clamp-2">
                                         {post.title}
                                     </h2>
 
@@ -78,7 +78,7 @@ export default async function BlogPage() {
                                         {post.excerpt}
                                     </p>
 
-                                    <div className="mt-auto flex items-center text-blue-600 font-semibold group-hover:gap-2 transition-all">
+                                    <div className="mt-auto flex items-center text-[#d4af37] font-semibold group-hover:gap-2 transition-all">
                                         Devamını Oku <ArrowRight size={20} className="ml-1" />
                                     </div>
                                 </div>

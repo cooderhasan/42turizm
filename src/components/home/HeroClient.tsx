@@ -39,31 +39,36 @@ export default function HeroClient({ slides }: HeroClientProps) {
                                     className="object-cover"
                                     priority={slide.id === slides[0]?.id}
                                 />
-                                {/* Dark Overlay */}
-                                <div className="absolute inset-0 bg-black/50" />
+                                {/* Darker Overlay for VIP feel */}
+                                <div className="absolute inset-0 bg-black/60" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a]/80 via-transparent to-[#0f172a]/30" />
                             </div>
 
                             {/* Content */}
                             <div className="relative z-10 h-full flex items-center justify-center text-center px-4">
-                                <div className="max-w-4xl mx-auto space-y-6">
-                                    <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight animate-fade-in-up">
-                                        {slide.title}
-                                    </h1>
+                                <div className="max-w-5xl mx-auto space-y-8">
+                                    <div className="animate-fade-in-up">
+                                        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight tracking-tight mb-2">
+                                            {slide.title}
+                                        </h1>
+                                        <div className="h-1 w-24 bg-[#d4af37] mx-auto rounded-full mt-6 mb-6"></div>
+                                    </div>
+
                                     {slide.subtitle && (
-                                        <p className="text-lg md:text-2xl text-gray-200 max-w-2xl mx-auto">
+                                        <p className="text-lg md:text-2xl text-gray-200 max-w-3xl mx-auto font-light leading-relaxed tracking-wide animate-fade-in-up delay-100">
                                             {slide.subtitle}
                                         </p>
                                     )}
-                                    <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+                                    <div className="flex flex-col sm:flex-row gap-5 justify-center mt-10 animate-fade-in-up delay-200">
                                         <Link
                                             href={slide.buttonLink || "/iletisim"}
-                                            className="bg-blue-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-blue-700 transition-all flex items-center justify-center gap-2"
+                                            className="bg-[#d4af37] text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-[#b5952f] transition-all transform hover:scale-105 shadow-lg shadow-[#d4af37]/20 flex items-center justify-center gap-2 border border-[#d4af37]"
                                         >
                                             {slide.buttonText || "Hemen Teklif Alın"} <ArrowRight size={20} />
                                         </Link>
                                         <Link
                                             href="/hizmetlerimiz"
-                                            className="bg-white/10 backdrop-blur-sm border border-white/30 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white/20 transition-all"
+                                            className="bg-transparent border-2 border-white/30 text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-[#0f172a] transition-all transform hover:scale-105 backdrop-blur-sm"
                                         >
                                             Hizmetlerimizi İnceleyin
                                         </Link>

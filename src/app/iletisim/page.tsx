@@ -34,7 +34,7 @@ export default function ContactPage() {
     }, []);
 
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitStatus, setSubmitStatus] = useState<{success: boolean; message: string} | null>(null);
+    const [submitStatus, setSubmitStatus] = useState<{ success: boolean; message: string } | null>(null);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -86,53 +86,53 @@ export default function ContactPage() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
                     {/* Contact Info */}
-                    <div className="bg-white p-10 rounded-2xl shadow-lg h-full">
-                        <h2 className="text-2xl font-bold text-gray-900 mb-8">İletişim Bilgileri</h2>
+                    <div className="bg-white p-10 rounded-2xl shadow-lg h-full border border-gray-100">
+                        <h2 className="text-2xl font-bold text-[#0f172a] mb-8">İletişim Bilgileri</h2>
 
                         <div className="space-y-8">
-                            <div className="flex items-start gap-4">
-                                <div className="bg-blue-100 p-3 rounded-full text-blue-600">
+                            <div className="flex items-start gap-4 group">
+                                <div className="bg-[#d4af37]/10 p-3 rounded-full text-[#d4af37] group-hover:bg-[#d4af37] group-hover:text-white transition-colors">
                                     <MapPin size={24} />
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-gray-900 mb-1">Adres</h3>
+                                    <h3 className="font-bold text-[#0f172a] mb-1">Adres</h3>
                                     <p className="text-gray-600" dangerouslySetInnerHTML={{ __html: contactInfo.address }}></p>
                                 </div>
                             </div>
 
-                            <div className="flex items-start gap-4">
-                                <div className="bg-blue-100 p-3 rounded-full text-blue-600">
+                            <div className="flex items-start gap-4 group">
+                                <div className="bg-[#d4af37]/10 p-3 rounded-full text-[#d4af37] group-hover:bg-[#d4af37] group-hover:text-white transition-colors">
                                     <Phone size={24} />
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-gray-900 mb-1">Telefon</h3>
+                                    <h3 className="font-bold text-[#0f172a] mb-1">Telefon</h3>
                                     <p className="text-gray-600 mb-1">
-                                        <a href={`tel:${contactInfo.phone1}`} className="hover:text-blue-600 transition-colors">{contactInfo.phone1}</a>
+                                        <a href={`tel:${contactInfo.phone1}`} className="hover:text-[#d4af37] transition-colors">{contactInfo.phone1}</a>
                                     </p>
                                     <p className="text-gray-600">
-                                        <a href={`tel:${contactInfo.phone2}`} className="hover:text-blue-600 transition-colors">{contactInfo.phone2}</a>
+                                        <a href={`tel:${contactInfo.phone2}`} className="hover:text-[#d4af37] transition-colors">{contactInfo.phone2}</a>
                                     </p>
                                 </div>
                             </div>
 
-                            <div className="flex items-start gap-4">
-                                <div className="bg-blue-100 p-3 rounded-full text-blue-600">
+                            <div className="flex items-start gap-4 group">
+                                <div className="bg-[#d4af37]/10 p-3 rounded-full text-[#d4af37] group-hover:bg-[#d4af37] group-hover:text-white transition-colors">
                                     <Mail size={24} />
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-gray-900 mb-1">E-posta</h3>
+                                    <h3 className="font-bold text-[#0f172a] mb-1">E-posta</h3>
                                     <p className="text-gray-600">
-                                        <a href={`mailto:${contactInfo.email}`} className="hover:text-blue-600 transition-colors">{contactInfo.email}</a>
+                                        <a href={`mailto:${contactInfo.email}`} className="hover:text-[#d4af37] transition-colors">{contactInfo.email}</a>
                                     </p>
                                 </div>
                             </div>
 
-                            <div className="flex items-start gap-4">
-                                <div className="bg-blue-100 p-3 rounded-full text-blue-600">
+                            <div className="flex items-start gap-4 group">
+                                <div className="bg-[#d4af37]/10 p-3 rounded-full text-[#d4af37] group-hover:bg-[#d4af37] group-hover:text-white transition-colors">
                                     <Clock size={24} />
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-gray-900 mb-1">Çalışma Saatleri</h3>
+                                    <h3 className="font-bold text-[#0f172a] mb-1">Çalışma Saatleri</h3>
                                     <p className="text-gray-600">
                                         Pazartesi - Cumartesi: 09:00 - 18:00<br />
                                         Pazar: Kapalı
@@ -143,8 +143,8 @@ export default function ContactPage() {
                     </div>
 
                     {/* Contact Form */}
-                    <div className="bg-white p-10 rounded-2xl shadow-lg h-full">
-                        <h2 className="text-2xl font-bold text-gray-900 mb-8">Bize Yazın</h2>
+                    <div className="bg-white p-10 rounded-2xl shadow-lg h-full border border-gray-100">
+                        <h2 className="text-2xl font-bold text-[#0f172a] mb-8">Bize Yazın</h2>
 
                         {/* Status Message */}
                         {submitStatus && (
@@ -161,7 +161,7 @@ export default function ContactPage() {
                                         type="text"
                                         id="name"
                                         name="name"
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all placeholder-gray-500 text-gray-900"
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#d4af37] focus:border-[#d4af37] outline-none transition-all placeholder-gray-500 text-gray-900"
                                         placeholder="Adınız Soyadınız"
                                     />
                                 </div>
@@ -171,7 +171,7 @@ export default function ContactPage() {
                                         type="email"
                                         id="email"
                                         name="email"
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all placeholder-gray-500 text-gray-900"
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#d4af37] focus:border-[#d4af37] outline-none transition-all placeholder-gray-500 text-gray-900"
                                         placeholder="ornek@domain.com"
                                     />
                                 </div>
@@ -183,7 +183,7 @@ export default function ContactPage() {
                                     type="tel"
                                     id="phone"
                                     name="phone"
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all placeholder-gray-500 text-gray-900"
+                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#d4af37] focus:border-[#d4af37] outline-none transition-all placeholder-gray-500 text-gray-900"
                                     placeholder="0555 555 55 55"
                                 />
                             </div>
@@ -193,7 +193,7 @@ export default function ContactPage() {
                                 <select
                                     id="subject"
                                     name="subject"
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-gray-500"
+                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#d4af37] focus:border-[#d4af37] outline-none transition-all text-gray-500"
                                 >
                                     <option value="">Seçiniz</option>
                                     <option value="teklif" className="text-gray-900">Fiyat Teklifi Almak İstiyorum</option>
@@ -209,7 +209,7 @@ export default function ContactPage() {
                                     id="message"
                                     name="message"
                                     rows={4}
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all placeholder-gray-500 text-gray-900"
+                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#d4af37] focus:border-[#d4af37] outline-none transition-all placeholder-gray-500 text-gray-900"
                                     placeholder="Mesajınızı buraya yazınız..."
                                 ></textarea>
                             </div>
@@ -217,7 +217,7 @@ export default function ContactPage() {
                             <button
                                 type="submit"
                                 disabled={isSubmitting}
-                                className={`w-full py-4 rounded-lg font-bold text-lg transition-colors shadow-lg hover:shadow-xl ${isSubmitting ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
+                                className={`w-full py-4 rounded-lg font-bold text-lg transition-colors shadow-lg hover:shadow-xl ${isSubmitting ? 'bg-[#d4af37]/70 cursor-not-allowed' : 'bg-[#d4af37] text-white hover:bg-[#b5952f]'}`}
                             >
                                 {isSubmitting ? (
                                     <span className="flex items-center justify-center">
@@ -228,7 +228,7 @@ export default function ContactPage() {
                                         Gönderiliyor...
                                     </span>
                                 ) : (
-                                    'Gönder'
+                                    'Mesajı Gönder'
                                 )}
                             </button>
                         </form>

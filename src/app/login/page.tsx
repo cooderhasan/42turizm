@@ -14,7 +14,7 @@ export default function LoginPage() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            background: '#0f172a', /* Navy background */
             padding: '20px',
             position: 'relative',
             overflow: 'hidden',
@@ -27,7 +27,7 @@ export default function LoginPage() {
                 right: '-5%',
                 width: '500px',
                 height: '500px',
-                background: 'rgba(255, 255, 255, 0.1)',
+                background: 'radial-gradient(circle, rgba(212,175,55,0.15) 0%, rgba(15,23,42,0) 70%)', /* Gold glow */
                 borderRadius: '50%',
                 filter: 'blur(60px)',
                 animation: 'float 6s ease-in-out infinite'
@@ -38,7 +38,7 @@ export default function LoginPage() {
                 left: '-5%',
                 width: '400px',
                 height: '400px',
-                background: 'rgba(255, 255, 255, 0.1)',
+                background: 'radial-gradient(circle, rgba(212,175,55,0.1) 0%, rgba(15,23,42,0) 70%)', /* Gold glow */
                 borderRadius: '50%',
                 filter: 'blur(60px)',
                 animation: 'float 8s ease-in-out infinite reverse'
@@ -47,13 +47,14 @@ export default function LoginPage() {
             <div style={{
                 maxWidth: '440px',
                 width: '100%',
-                background: 'rgba(255, 255, 255, 0.95)',
+                background: 'rgba(255, 255, 255, 0.98)',
                 backdropFilter: 'blur(10px)',
                 borderRadius: '24px',
-                boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
+                boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)',
                 padding: '48px',
                 position: 'relative',
-                zIndex: 1
+                zIndex: 1,
+                border: '1px solid rgba(212,175,55,0.2)'
             }}>
                 {/* Logo/Icon */}
                 <div style={{
@@ -64,14 +65,15 @@ export default function LoginPage() {
                     <div style={{
                         width: '80px',
                         height: '80px',
-                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
                         borderRadius: '20px',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        boxShadow: '0 10px 30px rgba(102, 126, 234, 0.4)'
+                        boxShadow: '0 10px 30px rgba(15, 23, 42, 0.4)',
+                        border: '2px solid #d4af37'
                     }}>
-                        <Shield size={40} color="white" />
+                        <Shield size={40} color="#d4af37" />
                     </div>
                 </div>
 
@@ -125,7 +127,7 @@ export default function LoginPage() {
                                     transition: 'all 0.3s',
                                     boxSizing: 'border-box'
                                 }}
-                                onFocus={(e) => e.target.style.borderColor = '#667eea'}
+                                onFocus={(e) => e.target.style.borderColor = '#d4af37'}
                                 onBlur={(e) => e.target.style.borderColor = '#e2e8f0'}
                             />
                         </div>
@@ -165,7 +167,7 @@ export default function LoginPage() {
                                     transition: 'all 0.3s',
                                     boxSizing: 'border-box'
                                 }}
-                                onFocus={(e) => e.target.style.borderColor = '#667eea'}
+                                onFocus={(e) => e.target.style.borderColor = '#d4af37'}
                                 onBlur={(e) => e.target.style.borderColor = '#e2e8f0'}
                             />
                         </div>
@@ -193,9 +195,9 @@ export default function LoginPage() {
                         style={{
                             width: '100%',
                             padding: '16px',
-                            background: isPending ? '#a0aec0' : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                            color: 'white',
-                            border: 'none',
+                            background: isPending ? '#a0aec0' : '#0f172a',
+                            color: isPending ? '#e2e8f0' : '#d4af37',
+                            border: '1px solid #d4af37',
                             borderRadius: '12px',
                             fontSize: '16px',
                             fontWeight: '600',
@@ -205,18 +207,22 @@ export default function LoginPage() {
                             justifyContent: 'center',
                             gap: '8px',
                             transition: 'all 0.3s',
-                            boxShadow: '0 4px 15px rgba(102, 126, 234, 0.4)',
+                            boxShadow: '0 4px 15px rgba(15, 23, 42, 0.4)',
                             marginTop: '8px'
                         }}
                         onMouseEnter={(e) => {
                             if (!isPending) {
                                 e.currentTarget.style.transform = 'translateY(-2px)';
-                                e.currentTarget.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.5)';
+                                e.currentTarget.style.background = '#d4af37';
+                                e.currentTarget.style.color = '#0f172a';
                             }
                         }}
                         onMouseLeave={(e) => {
-                            e.currentTarget.style.transform = 'translateY(0)';
-                            e.currentTarget.style.boxShadow = '0 4px 15px rgba(102, 126, 234, 0.4)';
+                            if (!isPending) {
+                                e.currentTarget.style.transform = 'translateY(0)';
+                                e.currentTarget.style.background = '#0f172a';
+                                e.currentTarget.style.color = '#d4af37';
+                            }
                         }}
                     >
                         {isPending ? (

@@ -3,17 +3,52 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Phone, Mail, Menu, X, Instagram, Facebook, Linkedin, ChevronDown } from 'lucide-react';
+import { Phone, Mail, Menu, X, Instagram, Facebook, Linkedin, ChevronDown, Bus, Map, Plane, Car, Key, Shield, Globe, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 
 const SERVICES_MENU = [
-    { title: 'Servis Taşımacılığı', href: '/hizmetlerimiz/servis-tasimaciligi' },
-    { title: 'Kültür Turları', href: '/hizmetlerimiz/kultur-turlari' },
-    { title: 'Turizm Taşımacılığı', href: '/hizmetlerimiz/turizm-tasimaciligi' },
-    { title: 'Havalimanı Transferi', href: '/hizmetlerimiz/havalimani-transferi' },
-    { title: 'Sürücülü VIP Araç', href: '/hizmetlerimiz/vip-arac-kiralama' },
-    { title: 'Filo Kiralama', href: '/hizmetlerimiz/filo-kiralama' },
-    { title: 'Güvenlik & Temizlik', href: '/hizmetlerimiz/guvenlik-temizlik' },
+    {
+        title: 'Servis Taşımacılığı',
+        href: '/hizmetlerimiz/servis-tasimaciligi',
+        description: 'Fabrikalar, şirketler ve kurumlar için güvenli personel taşımacılığı.',
+        icon: Bus
+    },
+    {
+        title: 'Kültür Turları',
+        href: '/hizmetlerimiz/kultur-turlari',
+        description: "Türkiye'nin eşsiz güzelliklerini profesyonel rehberlerle keşfedin.",
+        icon: Map
+    },
+    {
+        title: 'Turizm Taşımacılığı',
+        href: '/hizmetlerimiz/turizm-tasimaciligi',
+        description: 'Yurt içi ve yurt dışı kültür turları, özel geziler için araç temini.',
+        icon: Globe
+    },
+    {
+        title: 'Havalimanı Transferi',
+        href: '/hizmetlerimiz/havalimani-transferi',
+        description: 'Konya Havalimanı başta olmak üzere tüm havalimanlarına VIP transfer.',
+        icon: Plane
+    },
+    {
+        title: 'Sürücülü VIP Araç',
+        href: '/hizmetlerimiz/vip-arac-kiralama',
+        description: 'Özel misafirleriniz ve protokol taşımacılığı için VIP araç kiralama.',
+        icon: Car
+    },
+    {
+        title: 'Filo Kiralama',
+        href: '/hizmetlerimiz/filo-kiralama',
+        description: 'Şirketinizin ihtiyaç duyduğu binek ve ticari araç filosu çözümleri.',
+        icon: Key
+    },
+    {
+        title: 'Güvenlik & Temizlik',
+        href: '/hizmetlerimiz/guvenlik-temizlik',
+        description: 'Tesisleriniz için entegre tesis yönetim hizmetleri sunuyoruz.',
+        icon: Shield
+    },
 ];
 
 export default function Header() {
@@ -155,7 +190,7 @@ export default function Header() {
 
                     {/* Desktop Menu */}
                     <nav className="hidden md:flex items-center gap-8 font-medium">
-                        <Link href="/" className="hover:text-blue-500 transition-colors">Ana Sayfa</Link>
+                        <Link href="/" className="hover:text-[#d4af37] transition-colors">Ana Sayfa</Link>
 
                         {/* Dropdown Container */}
                         <div
@@ -163,30 +198,50 @@ export default function Header() {
                             onMouseEnter={() => setIsServiceDropdownOpen(true)}
                             onMouseLeave={() => setIsServiceDropdownOpen(false)}
                         >
-                            <button className="flex items-center gap-1 hover:text-blue-500 transition-colors py-4">
+                            <button className="flex items-center gap-1 hover:text-[#d4af37] transition-colors py-4">
                                 Hizmetlerimiz <ChevronDown size={14} />
                             </button>
 
-                            {/* Dropdown Menu */}
-                            <div className={`absolute top-full left-0 w-64 bg-white shadow-xl rounded-lg py-2 transition-all duration-200 transform origin-top-left ${isServiceDropdownOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'
+                            {/* Dropdown Menu - Modern Redesign */}
+                            <div className={`absolute top-full -left-16 w-[700px] bg-white shadow-xl rounded-xl transition-all duration-200 transform origin-top-left border border-gray-100 overflow-hidden ${isServiceDropdownOpen ? 'opacity-100 scale-100 visible translate-y-0' : 'opacity-0 scale-95 invisible -translate-y-2'
                                 }`}>
-                                {SERVICES_MENU.map((item, index) => (
-                                    <Link
-                                        key={index}
-                                        href={item.href}
-                                        className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors"
-                                    >
-                                        {item.title}
+                                <div className="p-6 grid grid-cols-2 gap-4">
+                                    {SERVICES_MENU.map((item, index) => {
+                                        const Icon = item.icon;
+                                        return (
+                                            <Link
+                                                key={index}
+                                                href={item.href}
+                                                className="flex items-start gap-4 p-3 rounded-xl hover:bg-gray-50 transition-colors group/item"
+                                            >
+                                                <div className="p-2.5 bg-gray-100 rounded-lg text-gray-600 group-hover/item:bg-[#d4af37]/10 group-hover/item:text-[#d4af37] transition-colors">
+                                                    <Icon size={20} />
+                                                </div>
+                                                <div>
+                                                    <h4 className="text-sm font-bold text-gray-900 group-hover/item:text-[#d4af37] transition-colors mb-0.5">
+                                                        {item.title}
+                                                    </h4>
+                                                    <p className="text-xs text-gray-500 font-normal leading-relaxed">
+                                                        {item.description}
+                                                    </p>
+                                                </div>
+                                            </Link>
+                                        );
+                                    })}
+                                </div>
+                                <div className="bg-gray-50 p-4 border-t border-gray-100">
+                                    <Link href="/iletisim" className="flex items-center justify-center gap-2 text-sm font-bold text-gray-700 hover:text-[#d4af37] transition-colors uppercase tracking-wide">
+                                        Özel talepleriniz için bize ulaşın <ArrowRight size={16} />
                                     </Link>
-                                ))}
+                                </div>
                             </div>
                         </div>
 
-                        <Link href="/arac-filomuz" className="hover:text-blue-500 transition-colors">Araç Filomuz</Link>
-                        <Link href="/referanslar" className="hover:text-blue-500 transition-colors">Referanslar</Link>
-                        <Link href="/blog" className="hover:text-blue-500 transition-colors">Blog</Link>
-                        <Link href="/kurumsal" className="hover:text-blue-500 transition-colors">Kurumsal</Link>
-                        <Link href="/iletisim" className="hover:text-blue-500 transition-colors">İletişim</Link>
+                        <Link href="/arac-filomuz" className="hover:text-[#d4af37] transition-colors">Araç Filomuz</Link>
+                        <Link href="/referanslar" className="hover:text-[#d4af37] transition-colors">Referanslar</Link>
+                        <Link href="/blog" className="hover:text-[#d4af37] transition-colors">Blog</Link>
+                        <Link href="/kurumsal" className="hover:text-[#d4af37] transition-colors">Kurumsal</Link>
+                        <Link href="/iletisim" className="hover:text-[#d4af37] transition-colors">İletişim</Link>
                     </nav>
 
                     {/* CTA Button */}

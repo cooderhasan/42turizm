@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Calendar, ArrowRight, Play } from 'lucide-react';
+import { Calendar, ArrowRight, Play, FileText, User } from 'lucide-react';
 import { db } from '@/db';
 import { blogPosts, settings } from '@/db/schema';
 import { desc, eq } from 'drizzle-orm';
@@ -20,7 +20,7 @@ export default async function BlogAndVideo() {
         posts = await db.query.blogPosts.findMany({
             where: eq(blogPosts.isPublished, true),
             orderBy: [desc(blogPosts.publishedAt)],
-            limit: 3,
+            limit: 2,
         });
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -57,10 +57,10 @@ export default async function BlogAndVideo() {
                     <div className="h-1 w-20 bg-blue-600 mx-auto rounded-full"></div>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
 
                     {/* Left: Video Section */}
-                    <div className="relative group rounded-2xl overflow-hidden shadow-2xl aspect-video bg-black/90 cursor-pointer">
+                    <div className="relative group rounded-2xl overflow-hidden shadow-2xl h-full min-h-[300px] lg:min-h-0 bg-black/90 cursor-pointer">
                         {/* Thumbnail - Use custom thumbnail if available, otherwise YouTube thumbnail */}
                         <div className="absolute inset-0 opacity-60">
                             <Image
@@ -92,34 +92,58 @@ export default async function BlogAndVideo() {
                     </div>
 
                     {/* Right: Latest Blog Posts */}
-                    <div className="flex flex-col gap-6">
-                        {posts.map((post) => (
-                            <Link key={post.id} href={`/blog/${post.slug}`} className="bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition-all flex gap-4 group">
-                                <div className="relative w-32 h-32 flex-shrink-0 rounded-lg overflow-hidden">
-                                    <Image
-                                        src={post.imageUrl || 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80'}
-                                        alt={post.title}
-                                        fill
-                                        className="object-cover group-hover:scale-110 transition-transform duration-500"
-                                    />
-                                </div>
-                                <div className="flex-1 flex flex-col justify-center">
-                                    <h4 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-2 line-clamp-2">{post.title}</h4>
-                                    <div className="flex items-center gap-2 text-sm text-gray-500">
-                                        <Calendar size={14} />
-                                        <span>{post.publishedAt ? new Date(post.publishedAt).toLocaleDateString('tr-TR') : 'Yayınlanmadı'}</span>
-                                    </div>
-                                    <p className="text-gray-600 text-sm mt-2 line-clamp-2">{post.excerpt}</p>
-                                </div>
-                            </Link>
-                        ))}
+                    <div>
+                        <div className="flex items-center justify-between mb-8">
+                            <div>
+                                <h2 className="text-[#d4af37] font-bold tracking-widest uppercase text-sm mb-2">Güncel Yazılar</h2>
+                                <h3 className="text-3xl font-bold text-[#0f172a]">Blogumuzdan</h3>
+                            </div>
+                            <div className="hidden md:block h-1 w-20 bg-[#d4af37] rounded-full"></div>
+                        </div>
 
-                        <div className="pt-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {posts.map((post) => (
+                                <div key={post.id} className="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-[#d4af37]/30">
+                                    <div className="relative h-48 overflow-hidden">
+                                        {post.imageUrl ? (
+                                            <Image
+                                                src={post.imageUrl}
+                                                alt={post.title}
+                                                fill
+                                                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                            />
+                                        ) : (
+                                            <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400">
+                                                <FileText size={48} />
+                                            </div>
+                                        )}
+                                        <div className="absolute top-4 left-4 bg-[#d4af37] text-white text-xs font-bold px-3 py-1 rounded-full uppercase">
+                                            Haberler
+                                        </div>
+                                    </div>
+                                    <div className="p-6">
+                                        <div className="flex items-center gap-4 text-xs text-gray-500 mb-3">
+                                            <span className="flex items-center gap-1"><Calendar size={14} /> {new Date(post.publishedAt || '').toLocaleDateString('tr-TR')}</span>
+                                            <span className="flex items-center gap-1"><User size={14} /> {post.author || 'Admin'}</span>
+                                        </div>
+                                        <h4 className="text-xl font-bold text-[#0f172a] group-hover:text-[#d4af37] transition-colors mb-3 line-clamp-2 leading-tight">{post.title}</h4>
+                                        <p className="text-gray-600 text-sm line-clamp-2 mb-4">
+                                            {post.excerpt}
+                                        </p>
+                                        <Link href={`/blog/${post.slug}`} className="inline-flex items-center text-[#d4af37] font-bold text-sm uppercase tracking-wide hover:underline">
+                                            Devamını Oku <ArrowRight size={14} className="ml-1" />
+                                        </Link>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="mt-8 text-center">
                             <Link
                                 href="/blog"
-                                className="inline-flex items-center justify-center w-full py-3 border-2 border-gray-200 rounded-lg text-gray-700 font-semibold hover:border-blue-600 hover:text-blue-600 transition-colors"
+                                className="inline-flex items-center justify-center w-full py-4 border-2 border-[#0f172a] text-[#0f172a] rounded-xl font-bold uppercase tracking-wider hover:bg-[#0f172a] hover:text-white transition-all duration-300"
                             >
-                                Tüm Duyuruları Gör <ArrowRight className="ml-2" size={20} />
+                                Tüm Yazıları İncele <ArrowRight className="ml-2" size={20} />
                             </Link>
                         </div>
                     </div>

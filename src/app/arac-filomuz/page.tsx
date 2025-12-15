@@ -24,7 +24,7 @@ export default async function FleetPage() {
     return (
         <div className="bg-gray-50 min-h-screen pb-20">
             {/* Page Header */}
-            <div className="bg-[#0a192f] text-white pt-48 pb-20">
+            <div className="bg-[#0f172a] text-white pt-48 pb-20">
                 <div className="container mx-auto px-4 text-center">
                     <h1 className="text-4xl md:text-5xl font-bold mb-4">Araç Filomuz</h1>
                     <p className="text-gray-400 max-w-2xl mx-auto">

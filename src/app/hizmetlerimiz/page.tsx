@@ -89,19 +89,19 @@ export default async function ServicesPage() {
     return (
         <div className="bg-gray-50 min-h-screen">
             {/* Hero Section */}
-            <div className="relative h-[60vh] min-h-[400px] bg-gradient-to-r from-blue-600 to-purple-700">
+            <div className="relative h-[60vh] min-h-[400px] bg-[#0f172a]">
                 <Image
                     src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=80&w=2070&auto=format&fit=crop"
                     alt="Hizmetlerimiz"
                     fill
-                    className="object-cover"
+                    className="object-cover opacity-60"
                 />
-                <div className="absolute inset-0 bg-black/60 flex items-center">
-                    <div className="container mx-auto px-4 text-center text-white">
+                <div className="absolute inset-0 bg-gradient-to-r from-[#0f172a]/90 to-transparent flex items-center">
+                    <div className="container mx-auto px-4 text-center md:text-left text-white">
                         <h1 className="text-4xl md:text-6xl font-bold mb-4 animate-fade-in-up">
                             Hizmetlerimiz
                         </h1>
-                        <p className="text-xl md:text-2xl max-w-3xl mx-auto animate-fade-in-up delay-100">
+                        <p className="text-xl md:text-2xl max-w-2xl text-gray-300 animate-fade-in-up delay-100">
                             Güvenli, konforlu ve profesyonel ulaşım çözümleri ile yanınızdayız.
                         </p>
                     </div>
@@ -112,7 +112,7 @@ export default async function ServicesPage() {
             <div className="container mx-auto px-4 py-20">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {displayServices.map((service) => (
-                        <div key={service.id} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group">
+                        <div key={service.id} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group border border-gray-100 hover:border-[#d4af37]/30">
                             <div className="relative h-64 overflow-hidden">
                                 <Image
                                     src={service.imageUrl || 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=80&w=2070&auto=format&fit=crop'}
@@ -120,19 +120,19 @@ export default async function ServicesPage() {
                                     fill
                                     className="object-cover group-hover:scale-110 transition-transform duration-700"
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a]/80 to-transparent" />
                             </div>
 
                             <div className="p-8 relative">
-                                <h2 className="text-2xl font-bold text-gray-900 mb-3">{service.title}</h2>
+                                <h2 className="text-2xl font-bold text-[#0f172a] mb-3 group-hover:text-[#d4af37] transition-colors">{service.title}</h2>
                                 <p className="text-gray-600 mb-6">{service.shortDescription}</p>
 
                                 {service.features && service.features.length > 0 && (
                                     <div className="space-y-3 mb-8">
                                         {service.features.slice(0, 3).map((feature: string, index: number) => (
                                             <div key={index} className="flex items-center gap-3 text-gray-700">
-                                                <CheckCircle2 className="text-green-600" size={18} />
-                                                <span className="text-sm">{feature}</span>
+                                                <CheckCircle2 className="text-[#d4af37]" size={18} />
+                                                <span className="text-sm font-medium">{feature}</span>
                                             </div>
                                         ))}
                                         {service.features.length > 3 && (
@@ -145,7 +145,7 @@ export default async function ServicesPage() {
 
                                 <Link
                                     href={`/hizmetlerimiz/${service.slug}`}
-                                    className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+                                    className="w-full bg-[#0f172a] text-white py-3 px-6 rounded-lg font-bold hover:bg-[#d4af37] transition-colors flex items-center justify-center gap-2 uppercase tracking-wide text-sm"
                                 >
                                     Detayları Görüntüle <ArrowRight size={18} />
                                 </Link>
@@ -156,15 +156,17 @@ export default async function ServicesPage() {
             </div>
 
             {/* CTA Section */}
-            <div className="bg-blue-600 text-white py-20">
-                <div className="container mx-auto px-4 text-center">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-4">Size Özel Çözümler</h2>
-                    <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+            <div className="bg-[#0f172a] text-white py-20 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-[#d4af37] rounded-full filter blur-[100px] opacity-20 transform translate-x-1/2 -translate-y-1/2"></div>
+
+                <div className="container mx-auto px-4 text-center relative z-10">
+                    <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Size Özel Çözümler</h2>
+                    <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
                         İhtiyaçlarınıza özel taşımacılık çözümleri için bizimle iletişime geçin.
                     </p>
                     <Link
                         href="/iletisim"
-                        className="bg-white text-blue-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-blue-50 transition-colors inline-flex items-center gap-2"
+                        className="bg-[#d4af37] text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white hover:text-[#0f172a] transition-all inline-flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                     >
                         Hemen Teklif Alın <ArrowRight size={20} />
                     </Link>
