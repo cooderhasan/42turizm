@@ -248,9 +248,9 @@ export default function Header() {
                     <div className="hidden md:block">
                         <Link
                             href="/iletisim"
-                            className={`px-6 py-2.5 rounded-full font-semibold transition-all transform hover:scale-105 ${isScrolled
-                                ? 'bg-blue-600 text-white hover:bg-blue-700'
-                                : 'bg-white text-blue-900 hover:bg-gray-100'
+                            className={`px-6 py-2.5 rounded-full font-semibold transition-all transform hover:scale-105 shadow-lg ${isScrolled
+                                ? 'bg-[#d4af37] text-white hover:bg-[#b08d26] hover:shadow-[#d4af37]/50'
+                                : 'bg-[#d4af37] text-white hover:bg-[#b08d26] hover:shadow-[#d4af37]/50' // Keep gold always for visibility
                                 }`}
                         >
                             Teklif Alın
@@ -268,41 +268,43 @@ export default function Header() {
             </div>
 
             {/* Mobile Menu Overlay */}
-            {isMobileMenuOpen && (
-                <div className="absolute top-[100%] left-0 w-full bg-white text-gray-800 shadow-xl border-t border-gray-100 p-6 md:hidden flex flex-col gap-4 max-h-[80vh] overflow-y-auto">
-                    <Link href="/" className="py-2 border-b border-gray-100" onClick={() => setIsMobileMenuOpen(false)}>Ana Sayfa</Link>
+            {
+                isMobileMenuOpen && (
+                    <div className="absolute top-[100%] left-0 w-full bg-white text-gray-800 shadow-xl border-t border-gray-100 p-6 md:hidden flex flex-col gap-4 max-h-[80vh] overflow-y-auto">
+                        <Link href="/" className="py-2 border-b border-gray-100" onClick={() => setIsMobileMenuOpen(false)}>Ana Sayfa</Link>
 
-                    {/* Mobile Submenu */}
-                    <div className="border-b border-gray-100 pb-2">
-                        <div className="font-semibold py-2 text-gray-900">Hizmetlerimiz</div>
-                        <div className="pl-4 flex flex-col gap-2 mt-1">
-                            {SERVICES_MENU.map((item, index) => (
-                                <Link
-                                    key={index}
-                                    href={item.href}
-                                    className="text-sm text-gray-600 py-1"
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                >
-                                    {item.title}
-                                </Link>
-                            ))}
+                        {/* Mobile Submenu */}
+                        <div className="border-b border-gray-100 pb-2">
+                            <div className="font-semibold py-2 text-gray-900">Hizmetlerimiz</div>
+                            <div className="pl-4 flex flex-col gap-2 mt-1">
+                                {SERVICES_MENU.map((item, index) => (
+                                    <Link
+                                        key={index}
+                                        href={item.href}
+                                        className="text-sm text-gray-600 py-1"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                    >
+                                        {item.title}
+                                    </Link>
+                                ))}
+                            </div>
                         </div>
-                    </div>
 
-                    <Link href="/arac-filomuz" className="py-2 border-b border-gray-100" onClick={() => setIsMobileMenuOpen(false)}>Araç Filomuz</Link>
-                    <Link href="/referanslar" className="py-2 border-b border-gray-100" onClick={() => setIsMobileMenuOpen(false)}>Referanslar</Link>
-                    <Link href="/blog" className="py-2 border-b border-gray-100" onClick={() => setIsMobileMenuOpen(false)}>Blog</Link>
-                    <Link href="/kurumsal" className="py-2 border-b border-gray-100" onClick={() => setIsMobileMenuOpen(false)}>Kurumsal</Link>
-                    <Link href="/iletisim" className="py-2 border-b border-gray-100" onClick={() => setIsMobileMenuOpen(false)}>İletişim</Link>
-                    <Link
-                        href="/iletisim"
-                        className="mt-4 bg-blue-600 text-white py-3 rounded-lg text-center font-semibold"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                        Teklif Alın
-                    </Link>
-                </div>
-            )}
-        </header>
+                        <Link href="/arac-filomuz" className="py-2 border-b border-gray-100" onClick={() => setIsMobileMenuOpen(false)}>Araç Filomuz</Link>
+                        <Link href="/referanslar" className="py-2 border-b border-gray-100" onClick={() => setIsMobileMenuOpen(false)}>Referanslar</Link>
+                        <Link href="/blog" className="py-2 border-b border-gray-100" onClick={() => setIsMobileMenuOpen(false)}>Blog</Link>
+                        <Link href="/kurumsal" className="py-2 border-b border-gray-100" onClick={() => setIsMobileMenuOpen(false)}>Kurumsal</Link>
+                        <Link href="/iletisim" className="py-2 border-b border-gray-100" onClick={() => setIsMobileMenuOpen(false)}>İletişim</Link>
+                        <Link
+                            href="/iletisim"
+                            className="mt-4 bg-blue-600 text-white py-3 rounded-lg text-center font-semibold"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                            Teklif Alın
+                        </Link>
+                    </div>
+                )
+            }
+        </header >
     );
 }

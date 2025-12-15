@@ -38,90 +38,70 @@ export default async function AdminDashboard() {
             title: 'Araç Filosu',
             value: counts.vehicles,
             icon: Bus,
-            color: 'from-blue-500 to-blue-600',
-            bgColor: 'bg-blue-50',
-            iconColor: 'text-blue-600',
             link: '/admin/vehicles'
         },
         {
             title: 'Blog Yazıları',
             value: counts.blogs,
             icon: FileText,
-            color: 'from-purple-500 to-purple-600',
-            bgColor: 'bg-purple-50',
-            iconColor: 'text-purple-600',
             link: '/admin/blog'
         },
         {
             title: 'Hizmetler',
             value: counts.services,
             icon: Briefcase,
-            color: 'from-green-500 to-green-600',
-            bgColor: 'bg-green-50',
-            iconColor: 'text-green-600',
             link: '/admin/services'
         },
         {
             title: 'Referanslar',
             value: counts.references,
             icon: MessageSquare,
-            color: 'from-orange-500 to-orange-600',
-            bgColor: 'bg-orange-50',
-            iconColor: 'text-orange-600',
             link: '/admin/references'
         },
         {
             title: 'Tur Paketleri',
             value: counts.tours,
             icon: Map,
-            color: 'from-pink-500 to-pink-600',
-            bgColor: 'bg-pink-50',
-            iconColor: 'text-pink-600',
             link: '/admin/tours'
         },
         {
             title: 'Hero Slider',
             value: counts.heroSlides,
             icon: Image,
-            color: 'from-indigo-500 to-indigo-600',
-            bgColor: 'bg-indigo-50',
-            iconColor: 'text-indigo-600',
             link: '/admin/hero'
         },
         {
             title: 'Müşteri Yorumları',
             value: counts.testimonials,
             icon: Star,
-            color: 'from-yellow-500 to-yellow-600',
-            bgColor: 'bg-yellow-50',
-            iconColor: 'text-yellow-600',
             link: '/admin/testimonials'
         },
     ];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-6">
+        <div className="min-h-screen bg-gray-50 p-4 md:p-6">
             {/* Header & Welcome Area */}
-            <div className="bg-white shadow-sm border-b border-gray-200 mb-8 rounded-xl p-6">
+            <div className="bg-white shadow-sm border-b border-gray-100 mb-8 rounded-2xl p-6">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div className="flex items-center gap-4">
-                        <div className="p-3 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-md">
-                            <Activity className="text-white" size={24} />
+                        <div className="p-3 bg-[#0f172a] rounded-xl shadow-md border border-[#d4af37]/30">
+                            <Activity className="text-[#d4af37]" size={24} />
                         </div>
                         <div>
-                            <h1 className="text-2xl font-bold text-gray-900 leading-tight">Panel Özeti</h1>
+                            <h1 className="text-2xl font-bold text-[#0f172a] leading-tight">Panel Özeti</h1>
                             <p className="text-gray-500 text-sm mt-1">Sistem durumuna genel bakış</p>
                         </div>
                     </div>
 
-                    <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 flex-1 md:max-w-xl">
-                        <div className="flex items-center gap-4">
-                            <div className="bg-blue-100 p-2.5 rounded-full hidden sm:block">
+                    <div className="bg-[#0f172a] text-white rounded-xl p-4 flex-1 md:max-w-xl relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-[#d4af37] rounded-full filter blur-[40px] opacity-20 transform translate-x-10 -translate-y-10 group-hover:scale-110 transition-transform duration-700"></div>
+                        <div className="flex items-center gap-4 relative z-10">
+                            <div className="bg-white/10 p-2.5 rounded-full hidden sm:block">
                                 <span className="text-2xl">👋</span>
                             </div>
                             <div>
-                                <h2 className="text-base font-bold text-blue-900">Hoş Geldiniz!</h2>
-                                <p className="text-blue-700 text-sm mt-1">
+                                <h2 className="text-base font-bold text-[#d4af37]">Hoş Geldiniz!</h2>
+                                <p className="text-gray-300 text-sm mt-1">
                                     Admin panelinden tüm site içeriğini yönetebilirsiniz.
                                 </p>
                             </div>
@@ -140,24 +120,18 @@ export default async function AdminDashboard() {
                             <a
                                 key={index}
                                 href={card.link}
-                                className="group relative bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden border border-gray-100 hover:border-gray-200 flex flex-col h-28"
+                                className="group relative bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 hover:border-[#d4af37]/50 flex flex-col h-28"
                             >
-                                <div className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-br ${card.color} opacity-10 rounded-full -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-500`}></div>
+                                <div className="absolute top-0 right-0 w-20 h-20 bg-[#f8fafc] rounded-full -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-500 delay-100"></div>
 
                                 <div className="p-4 flex flex-col h-full justify-between relative z-10">
                                     <div className="flex items-start justify-between">
-                                        <div className={`p-2 ${card.bgColor} rounded-lg group-hover:scale-110 transition-transform duration-300`}>
-                                            <Icon className={card.iconColor} size={20} />
+                                        <div className="p-2 bg-[#f1f5f9] rounded-lg group-hover:bg-[#0f172a] transition-colors duration-300">
+                                            <Icon className="text-gray-500 group-hover:text-[#d4af37] transition-colors duration-300" size={20} />
                                         </div>
-                                        <div className="text-right">
-                                            <h3 className="text-2xl font-bold text-gray-900 leading-none">
-                                                {card.value}
-                                            </h3>
-                                        </div>
+                                        <div className="text-2xl font-bold text-[#0f172a]">{card.value}</div>
                                     </div>
-                                    <p className="text-xs font-bold text-gray-500 uppercase tracking-wide truncate mt-auto">
-                                        {card.title}
-                                    </p>
+                                    <div className="text-xs font-semibold text-gray-500 group-hover:text-[#d4af37] transition-colors">{card.title}</div>
                                 </div>
                             </a>
                         );
