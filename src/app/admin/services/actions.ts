@@ -23,7 +23,7 @@ async function saveImage(file: File): Promise<string | null> {
         const filepath = join(uploadDir, filename);
 
         await writeFile(filepath, buffer);
-        return `/uploads/services/${filename}`;
+        return `/api/uploads/services/${filename}`;
     } catch (error) {
         console.error('Error saving image:', error);
         throw new Error('Görsel kaydedilemedi.');

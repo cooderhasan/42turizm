@@ -21,7 +21,7 @@ async function saveImage(file: File): Promise<string | null> {
         const filepath = join(uploadDir, filename);
 
         await writeFile(filepath, buffer);
-        return `/uploads/vehicles/${filename}`;
+        return `/api/uploads/vehicles/${filename}`;
     } catch (error) {
         console.error('Error saving vehicle image:', error);
         throw new Error('Araç görseli kaydedilemedi.');

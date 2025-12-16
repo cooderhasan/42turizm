@@ -21,7 +21,7 @@ export async function uploadFile(file: File | null): Promise<string | null> {
     try {
         await writeFile(filepath, buffer);
         console.log(`File saved to ${filepath}`);
-        return `/uploads/${filename}`;
+        return `/api/uploads/${filename}`;
     } catch (error) {
         console.error('Error saving file:', error);
         return null; // Handle error gracefully

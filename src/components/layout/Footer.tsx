@@ -92,7 +92,15 @@ export default function Footer() {
                     <div>
                         <Link href="/" className="text-2xl font-bold tracking-tight flex items-center mb-6">
                             {logoUrl ? (
-                                <Image src={logoUrl} alt="42 Turizm" width={200} height={60} className="h-12 w-auto" />
+                                <Image
+                                    src={logoUrl}
+                                    alt="42 Turizm"
+                                    width={200}
+                                    height={60}
+                                    className="h-12 w-auto object-contain brightness-0 invert opacity-90" // Make it white/monochrome for footer if desired, or keep original. Let's keep original but ensure visibility.
+                                    onError={() => setLogoUrl(null)}
+                                    unoptimized
+                                />
                             ) : <span className="text-3xl font-bold text-white">42<span className="text-[#d4af37]">Turizm</span></span>
                             }
                         </Link>
