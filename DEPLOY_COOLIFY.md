@@ -41,12 +41,17 @@ Uygulama ayarlarında **Environment Variables** sekmesine gelin ve aşağıdaki 
 *   **Install Command:** `npm ci` (veya `npm install`)
 
 ### Veritabanı Şemasını Gönderme (Önemli!)
-Uygulama deploy olurken veritabanı tablolarının oluşması için bir komut çalıştırmamız lazım. Coolify'da **Deploy** butonunun yanında veya ayarlarında **"Pre-deployment Command"** benzeri bir yer yoksa, en kolayı **Start Command**'i değiştirmektir.
+Build sırasında Next.js statik sayfaları oluşturmaya çalışır ve bu sırada veritabanına bağlanır. Veritabanı tabloları henüz yoksa build işlemi hata verir ("relation does not exist").
 
-**Start Command**'i şu şekilde güncelleyin:
+Bu yüzden **Build Command**'i (Build Komutunu) güncellememiz gerekir.
+
+**Build Command**'i şu şekilde güncelleyin:
 ```bash
-npm run db:push && npm run start
+npm run db:push && npm run build
 ```
+*Bu komut, build işleminden hemen önce veritabanı tablolarını oluşturur.*
+
+> **Not:** Start Command varsayılan olarak `npm run start` kalabilir veya güvenlik amacıyla `npm run db:push && npm run start` olarak da bırakabilirsiniz. Ancak Build aşamasını geçmek için yukarıdaki değişiklik şarttır.
 *Bu komut, her başlatmada önce veritabanı tablolarını günceller, sonra siteyi açar.*
 
 ## 6. Yayına Alma
@@ -58,3 +63,14 @@ npm run db:push && npm run start
 *   **Domains** sekmesine gidin.
 *   Alan adınızı (örn: `https://si-t-eniz.com`) yazın ve kaydedin.
 *   DNS ayarlarınızdan (Cloudflare vb.) A kaydını Coolify sunucu IP'nize yönlendirmeyi unutmayın.
+
+## 8. Sık Karşılaşılan Hatalar (Troubleshooting)
+
+### "Failed to connect to github.com" Hatası / Exit Code 128
+Eğer deploy sırasında `fatal: unable to access ... Failed to connect to github.com port 443` hatası alıyorsanız, sunucunuzun (veya Docker konteynerinin) GitHub'a erişimi bir şekilde engellenmiştir.
+
+**Çözüm Önerileri:**
+1.  **Sunucu İnternet Bağlantısı:** Coolify sunucunuzun internete gerçekten çıkabildiğinden emin olun (SSH ile girip `ping google.com` yapmayı deneyin).
+2.  **DNS Sorunu:** Sunucunuz `github.com` adresini çözemiyor olabilir. Sunucu DNS ayarlarını `8.8.8.8` (Google) veya `1.1.1.1` (Cloudflare) olarak değiştirin.
+3.  **Firewall:** Sunucunuzun veya hosting sağlayıcınızın 443 (HTTPS) portuna giden (outbound) trafiği engellemediğinden emin olun.
+4.  **Docker Network:** Eğer sunucuda internet varsa ama Coolify hata veriyorsa, Docker servisini yeniden başlatmayı deneyin: `systemctl restart docker`.

@@ -1,185 +1,284 @@
 
 import { db } from './index';
-import { users, references, services, blogPosts, settings } from './schema';
+import {
+    settings,
+    users,
+    references,
+    services,
+    blogPosts,
+    heroSlides,
+    vehicles,
+} from './schema';
 import { eq } from 'drizzle-orm';
 
-async function main() {
+async function seed() {
+    const connectionString = process.env.DATABASE_URL;
+    console.log(
+        'DB Connection String (masked):',
+        connectionString?.replace(/:[^:@]+@/, ':***@')
+    );
+
     console.log('Seeding database...');
 
     try {
-        // 1. Seed Settings
+        // Settings
         const existingSettings = await db.select().from(settings).limit(1);
+
         if (existingSettings.length === 0) {
             await db.insert(settings).values({
                 siteTitle: '42 Turizm',
-                siteDescription: 'İstanbul Personel ve Öğrenci Taşımacılığı',
-                address: 'Örnek Mahallesi, Turizm Caddesi No: 42 Kadıköy / İstanbul',
-                phone1: '+90 555 555 55 55',
+                siteDescription: 'Konya\'dan Türkiye\'nin her yerine güvenli ve konforlu transfer hizmeti',
+                address: 'Konya, Türkiye',
+                phone1: '+90 532 123 45 67',
+                phone2: '+90 542 987 65 43',
                 email: 'info@42turizm.com',
-                aboutText: '2010 yılından beri güvenli ve konforlu taşımacılık hizmetleri sunuyoruz.'
+                whatsappNumber: '+905321234567',
+                instagramUrl: 'https://instagram.com/42turizm',
+                facebookUrl: 'https://facebook.com/42turizm',
+                linkedinUrl: 'https://linkedin.com/company/42turizm',
+                aboutText: 'Konya merkezli turizm şirketimiz, yıllardır süren deneyimimizle güvenli ve konforlu yolculuklar sunuyoruz.',
+                missionText: 'Müşteri memnuniyetini ön planda tutarak kaliteli hizmet sunmak.',
+                visionText: 'Türkiye\'nin en güvenilir transfer şirketi olmak.',
+                logoUrl: '/logo.png',
+                stat1Label: 'Mutlu Müşteri',
+                stat1Value: '5000+',
+                stat2Label: 'Yıllık Deneyim',
+                stat2Value: '15+',
+                stat3Label: 'Aktif Araç',
+                stat3Value: '50+',
             });
             console.log('✅ Settings seeded.');
         } else {
             console.log('ℹ️  Settings already exist.');
         }
 
-        // 2. Seed Admin User
-        const existingUser = await db.select().from(users).where(eq(users.email, 'admin@42turizm.com'));
+        // Admin User
+        const existingAdmin = await db
+            .select()
+            .from(users)
+            .where(eq(users.email, 'admin@42turizm.com'))
+            .limit(1);
 
-        if (existingUser.length === 0) {
+        if (existingAdmin.length === 0) {
+            // Not: Şu anki auth sisteminde şifreler düz metin olarak saklanıyor (src/app/admin/actions.ts dosyasına göre).
+            // Production ortamında bcrypt vb. kullanılması önerilir.
+            const plainPassword = 'admin123';
             await db.insert(users).values({
                 email: 'admin@42turizm.com',
-                password: 'admin', // Changed to simple password for initial setup, user should change it
+                password: plainPassword,
                 role: 'admin',
             });
-            console.log('✅ Admin user created: admin@42turizm.com / admin');
+            console.log('✅ Admin user created (email: admin@42turizm.com, password: admin123)');
         } else {
             console.log('ℹ️  Admin user already exists.');
         }
 
-        // 3. Seed References
-        const existingReferences = await db.select().from(references);
+        // Hero Slides - SİL VE YENİDEN EKLE
+        // Mevcut slaytları temizle (idempotency için)
+        await db.delete(heroSlides);
 
-        if (existingReferences.length === 0) {
-            await db.insert(references).values([
-                {
-                    name: 'Turkish Airlines',
-                    imageUrl: '/references/turkish-airlines.png',
-                    category: 'private',
-                    order: 1,
-                },
-                {
-                    name: 'Milli Eğitim Bakanlığı',
-                    imageUrl: '/references/meb.png',
-                    category: 'public',
-                    order: 2,
-                },
-                {
-                    name: 'Koç Holding',
-                    imageUrl: '/references/koc-holding.png',
-                    category: 'private',
-                    order: 3,
-                },
-                {
-                    name: 'Sabancı Holding',
-                    imageUrl: '/references/sabanci.png',
-                    category: 'private',
-                    order: 4,
-                },
-                {
-                    name: 'Eczacıbaşı',
-                    imageUrl: '/references/eczacibasi.png',
-                    category: 'private',
-                    order: 5,
-                },
-                {
-                    name: 'Turkcell',
-                    imageUrl: '/references/turkcell.png',
-                    category: 'private',
-                    order: 6,
-                },
-            ]);
-            console.log('✅ 6 sample references added.');
-        } else {
-            console.log('ℹ️  References already exist.');
-        }
+        await db.insert(heroSlides).values([
+            {
+                title: 'Güvenli Yolculuk',
+                subtitle: 'Konya\'dan Türkiye\'nin Her Yerine',
+                imageUrl: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=1920&h=1080&fit=crop',
+                buttonText: 'Hemen Rezervasyon Yap',
+                buttonLink: '/iletisim',
+                isActive: true,
+                order: 1,
+            },
+            {
+                title: 'Konforlu Araçlar',
+                subtitle: 'Modern ve Temiz Filomuz',
+                imageUrl: 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=1920&h=1080&fit=crop',
+                buttonText: 'Araçlarımızı İncele',
+                buttonLink: '/araclar',
+                isActive: true,
+                order: 2,
+            },
+            {
+                title: '7/24 Hizmet',
+                subtitle: 'Her An Ulaşılabilir',
+                imageUrl: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1920&h=1080&fit=crop',
+                buttonText: 'Bizi Arayın',
+                buttonLink: '/iletisim',
+                isActive: true,
+                order: 3,
+            },
+        ]);
+        console.log('✅ Hero slides seeded.');
 
-        // 4. Seed Services
-        const servicesData = [
+        // References
+        await db.delete(references);
+        await db.insert(references).values([
             {
-                title: 'Servis Taşımacılığı',
-                slug: 'servis-tasimaciligi',
-                shortDescription: 'Personeliniz için güvenli ve dakik ulaşım çözümleri.',
-                detailedDescription: 'Personel taşımacılığında güven, konfor ve zamanlama bizim için en önemli unsurlardır.',
-                imageUrl: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=2071&auto=format&fit=crop',
-                isActive: true
+                name: 'Konya Büyükşehir Belediyesi',
+                imageUrl: 'https://via.placeholder.com/200x100?text=Konya+BB',
+                category: 'public',
+                order: 1,
             },
             {
-                title: 'Kültür Turları',
-                slug: 'kultur-turlari',
-                shortDescription: 'Tarihi ve turistik güzellikleri keşfetmek için özel turlar.',
-                detailedDescription: 'Yurt içi ve yurt dışı kültür turları ile yeni yerler keşfedin.',
-                imageUrl: 'https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=80&w=2000&auto=format&fit=crop',
-                isActive: true
+                name: 'Selçuk Üniversitesi',
+                imageUrl: 'https://via.placeholder.com/200x100?text=Selcuk+Uni',
+                category: 'public',
+                order: 2,
             },
             {
-                title: 'Turizm Taşımacılığı',
-                slug: 'turizm-tasimaciligi',
-                shortDescription: 'Yerli ve yabancı turist kafileleri için profesyonel taşımacılık.',
-                detailedDescription: 'Turizm acenteleri ve oteller için transfer ve tur hizmetleri.',
-                imageUrl: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2069&auto=format&fit=crop',
-                isActive: true
+                name: 'Necmettin Erbakan Üniversitesi',
+                imageUrl: 'https://via.placeholder.com/200x100?text=NEU',
+                category: 'public',
+                order: 3,
             },
+        ]);
+        console.log('✅ References seeded.');
+
+        // Services
+        await db.delete(services);
+        await db.insert(services).values([
             {
                 title: 'Havalimanı Transferi',
                 slug: 'havalimani-transferi',
-                shortDescription: 'Havalimanından otelinize veya evinize konforlu transfer.',
-                detailedDescription: '7/24 havalimanı karşılama ve transfer hizmeti.',
-                imageUrl: 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070&auto=format&fit=crop',
-                isActive: true
+                shortDescription: 'Konya Havalimanı\'ndan şehir merkezine güvenli transfer',
+                detailedDescription: 'Profesyonel şoförlerimiz ile 7/24 havalimanı transfer hizmeti sunuyoruz.',
+                iconName: 'plane',
+                imageUrl: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&h=600&fit=crop',
+                features: ['7/24 Hizmet', 'Karşılama Tabelası', 'Klimalı Araçlar', 'Bagaj Taşıma'],
+                isActive: true,
+                order: 1,
             },
             {
-                title: 'Sürücülü VIP Araç',
-                slug: 'vip-arac-kiralama',
-                shortDescription: 'Özel günleriniz ve iş toplantılarınız için VIP araç kiralama.',
-                detailedDescription: 'Lüks araçlarımız ve profesyonel sürücülerimizle VIP hizmet.',
-                imageUrl: 'https://images.unsplash.com/photo-1627916538562-f9479e0f624e?q=80&w=2070&auto=format&fit=crop',
-                isActive: true
+                title: 'Şehirler Arası Transfer',
+                slug: 'sehirler-arasi-transfer',
+                shortDescription: 'Türkiye\'nin her yerine konforlu yolculuk',
+                detailedDescription: 'Ankara, İstanbul, İzmir ve daha fazlası...',
+                iconName: 'map',
+                imageUrl: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&h=600&fit=crop',
+                features: ['Kapıdan Kapıya', 'Esnek Saatler', 'Güvenli Yolculuk'],
+                isActive: true,
+                order: 2,
             },
             {
-                title: 'Filo Kiralama',
-                slug: 'filo-kiralama',
-                shortDescription: 'Kurumsal firmalar için uzun dönem araç kiralama çözümleri.',
-                detailedDescription: 'Şirketinizin ihtiyaçlarına uygun filo kiralama seçenekleri.',
-                imageUrl: 'https://images.unsplash.com/photo-1485291571150-772bcfc10da5?q=80&w=2128&auto=format&fit=crop',
-                isActive: true
-            }
-        ];
-
-        for (const service of servicesData) {
-            const existing = await db.select().from(services).where(eq(services.slug, service.slug));
-            if (existing.length === 0) {
-                await db.insert(services).values(service);
-            }
-        }
+                title: 'Günlük Kiralama',
+                slug: 'gunluk-kiralama',
+                shortDescription: 'Şoförlü veya şoförsüz günlük araç kiralama',
+                detailedDescription: 'İhtiyacınıza uygun araç seçenekleri ile günlük kiralama hizmeti.',
+                iconName: 'car',
+                imageUrl: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&h=600&fit=crop',
+                features: ['Ekonomik Fiyatlar', 'Tam Kasko', 'Yeni Model Araçlar'],
+                isActive: true,
+                order: 3,
+            },
+            {
+                title: 'Kurumsal Transfer',
+                slug: 'kurumsal-transfer',
+                shortDescription: 'Şirketler için özel transfer çözümleri',
+                detailedDescription: 'Toplantı, seminer ve organizasyonlarınız için profesyonel hizmet.',
+                iconName: 'briefcase',
+                imageUrl: 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=800&h=600&fit=crop',
+                features: ['Fatura Seçeneği', 'Anlaşmalı Fiyat', 'Öncelikli Hizmet'],
+                isActive: true,
+                order: 4,
+            },
+            {
+                title: 'Özel Etkinlik Transferi',
+                slug: 'ozel-etkinlik-transferi',
+                shortDescription: 'Düğün, nişan ve özel günleriniz için',
+                detailedDescription: 'Özel günlerinizde lüks araç seçenekleri ile hizmetinizdeyiz.',
+                iconName: 'heart',
+                imageUrl: 'https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?w=800&h=600&fit=crop',
+                features: ['Lüks Araçlar', 'Süsleme', 'Fotoğraf Çekimi'],
+                isActive: true,
+                order: 5,
+            },
+            {
+                title: 'Turizm Turu',
+                slug: 'turizm-turu',
+                shortDescription: 'Konya ve çevresinde rehberli turlar',
+                detailedDescription: 'Mevlana Müzesi, Çatalhöyük ve daha fazlası...',
+                iconName: 'camera',
+                imageUrl: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&h=600&fit=crop',
+                features: ['Rehberli Tur', 'Giriş Ücretleri', 'Yemek Servisi'],
+                isActive: true,
+                order: 6,
+            },
+        ]);
         console.log('✅ Services seeded.');
 
-        // 5. Seed Blog Posts
-        const blogData = [
+        // Vehicles (Eğer şema destekliyorsa)
+        // Şema kontrolü: vehicles tablosu schema.ts'de mevcut.
+        await db.delete(vehicles);
+        await db.insert(vehicles).values([
             {
-                title: 'Filomuza Yeni Katılan 2024 Model Araçlar',
-                slug: 'filo-yenilendi',
-                excerpt: 'Hizmet kalitemizi artırmak için filomuzu yenilemeye devam ediyoruz.',
-                content: '<p>Lorem ipsum dolor sit amet...</p>',
-                imageUrl: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=2071&auto=format&fit=crop',
-                isPublished: true,
-                publishedAt: new Date()
+                name: 'Mercedes Vito',
+                category: 'VIP',
+                capacity: 7,
+                fuelType: 'Dizel',
+                driverOption: 'Şoförlü',
+                imageUrl: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&h=600&fit=crop',
+                isActive: true,
+                order: 1
             },
             {
-                title: 'Sürücülerimize İleri Sürüş Teknikleri Eğitimi',
-                slug: 'surucu-egitimi',
-                excerpt: 'Güvenli ulaşımın en önemli unsuru olan sürücülerimizin eğitimi bizim için önceliklidir.',
-                content: '<p>Lorem ipsum dolor sit amet...</p>',
-                imageUrl: 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070&auto=format&fit=crop',
-                isPublished: true,
-                publishedAt: new Date()
+                name: 'Mercedes Sprinter',
+                category: 'Minibüs',
+                capacity: 16,
+                fuelType: 'Dizel',
+                driverOption: 'Şoförlü',
+                imageUrl: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=800&h=600&fit=crop',
+                isActive: true,
+                order: 2
             }
-        ];
+        ]);
+        console.log('✅ Vehicles seeded.');
 
-        for (const post of blogData) {
-            const existing = await db.select().from(blogPosts).where(eq(blogPosts.slug, post.slug));
-            if (existing.length === 0) {
-                await db.insert(blogPosts).values(post);
-            }
-        }
+        // Blog Posts
+        await db.delete(blogPosts);
+        await db.insert(blogPosts).values([
+            {
+                title: 'Konya\'da Gezilecek Yerler',
+                slug: 'konyada-gezilecek-yerler',
+                excerpt: 'Konya\'nın en güzel tarihi ve turistik mekanları',
+                content: 'Konya, tarihi ve kültürel zenginlikleriyle Türkiye\'nin en önemli şehirlerinden biri...',
+                author: 'Admin',
+                imageUrl: 'https://images.unsplash.com/photo-1541963463532-d68292c34b19?w=800&h=600&fit=crop',
+                isPublished: true,
+                publishedAt: new Date('2024-01-15'),
+            },
+            {
+                title: 'Havalimanı Transfer İpuçları',
+                slug: 'havalimani-transfer-ipuclari',
+                excerpt: 'Havalimanı transferinde dikkat edilmesi gerekenler',
+                content: 'Havalimanı transferi rezervasyonu yaparken nelere dikkat etmelisiniz?',
+                author: 'Admin',
+                imageUrl: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&h=600&fit=crop',
+                isPublished: true,
+                publishedAt: new Date('2024-01-20'),
+            },
+            {
+                title: 'Güvenli Yolculuk İçin Öneriler',
+                slug: 'guvenli-yolculuk-onerileri',
+                excerpt: 'Yolculuk öncesi ve sırasında güvenlik ipuçları',
+                content: 'Uzun yolculuklarda konfor ve güvenlik için önerilerimiz...',
+                author: 'Admin',
+                imageUrl: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&h=600&fit=crop',
+                isPublished: true,
+                publishedAt: new Date('2024-02-01'),
+            },
+        ]);
         console.log('✅ Blog posts seeded.');
 
         console.log('🎉 Seed operation completed successfully!');
     } catch (error) {
-        console.error('❌ Error seeding database:', error);
-    } finally {
-        process.exit(0);
+        console.error('❌ Error during seeding:', error);
+        throw error;
     }
 }
 
-main();
+seed()
+    .catch((e) => {
+        console.error(e);
+        process.exit(1);
+    })
+    .finally(async () => {
+        process.exit(0);
+    });

@@ -8,6 +8,13 @@
       "when": 1765625773112,
       "tag": "0000_stiff_avengers",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1765865505116,
+      "tag": "0001_steady_snowbird",
+      "breakpoints": true
     }
   ]
 }
