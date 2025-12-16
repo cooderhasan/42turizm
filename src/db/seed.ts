@@ -8,6 +8,8 @@ import {
     blogPosts,
     heroSlides,
     vehicles,
+    tours,
+    testimonials
 } from './schema';
 import { eq } from 'drizzle-orm';
 
@@ -283,6 +285,60 @@ async function seed() {
             },
         ]);
         console.log('✅ Blog posts seeded.');
+
+        // Tours
+        await db.delete(tours);
+        await db.insert(tours).values([
+            {
+                title: 'Konya Mevlana Turu',
+                slug: 'konya-mevlana-turu',
+                coverImage: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=1200&h=800&fit=crop',
+                description: 'Hz. Mevlana\'nın diyarı Konya\'yı keşfetmeye hazır mısınız? Şeb-i Arus törenleri ve tarihi camiler.',
+            },
+            {
+                title: 'Kapadokya Balon Turu',
+                slug: 'kapadokya-balon-turu',
+                coverImage: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200&h=800&fit=crop',
+                description: 'Peri bacaları ve sıcak hava balonlarıyla unutulmaz bir Kapadokya deneyimi.',
+            },
+            {
+                title: 'GAP Turu',
+                slug: 'gap-turu',
+                coverImage: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=1200&h=800&fit=crop',
+                description: 'Güneydoğu Anadolu\'nun tarihi ve lezzet dolu şehirlerini keşfedin.',
+            }
+        ]);
+        console.log('✅ Tours seeded.');
+
+        // Testimonials
+        await db.delete(testimonials);
+        await db.insert(testimonials).values([
+            {
+                name: 'Ahmet Yılmaz',
+                title: 'Şirket Müdürü',
+                content: '42 Turizm ile yıllardır çalışıyoruz. Personel servis hizmetlerinden çok memnunuz. Araçlar her zaman temiz ve zamanında.',
+                rating: 5,
+                isActive: true,
+                order: 1,
+            },
+            {
+                name: 'Ayşe Demir',
+                title: 'Okul Müdürü',
+                content: 'Öğrenci taşımacılığında güven bizim için en önemli kriter. 42 Turizm bu konuda beklentilerimizi fazlasıyla karşılıyor.',
+                rating: 5,
+                isActive: true,
+                order: 2,
+            },
+            {
+                name: 'Mehmet Özkan',
+                title: 'Turist',
+                content: 'Havalimanı transfer hizmetini kullandım. Şoför bey çok kibardı ve araç çok konforluydu. Kesinlikle tavsiye ederim.',
+                rating: 5,
+                isActive: true,
+                order: 3,
+            }
+        ]);
+        console.log('✅ Testimonials seeded.');
 
         console.log('🎉 Seed operation completed successfully!');
     } catch (error) {
