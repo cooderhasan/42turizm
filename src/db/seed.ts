@@ -50,9 +50,8 @@ async function seed() {
             });
             console.log('✅ Settings seeded.');
         } else {
-            // settings varsa logoUrl'i güncelle
-            await db.update(settings).set({ logoUrl: '/logo.svg' }).where(eq(settings.id, existingSettings[0].id));
-            console.log('ℹ️  Settings updated (logoUrl).');
+            console.log('ℹ️  Settings already exist. Skipping creation.');
+            // Do NOT overwrite logoUrl repeatedly. Let admin manage it.
         }
 
         // Admin User
