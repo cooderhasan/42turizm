@@ -182,7 +182,15 @@ export default function Header() {
                     {/* Logo */}
                     <Link href="/" className="text-2xl font-bold tracking-tight flex items-center">
                         {logoUrl ? (
-                            <Image src={logoUrl} alt="42 Turizm" width={200} height={60} className="h-12 w-auto" />
+                            <Image
+                                src={logoUrl}
+                                alt="42 Turizm"
+                                width={200}
+                                height={60}
+                                className="h-12 w-auto object-contain"
+                                onError={() => setLogoUrl(null)} // Fallback to text if image fails (e.g. 404)
+                                unoptimized // Bypass optimization if there are issues with local files
+                            />
                         ) : (
                             <span className="text-3xl font-bold">42<span className="text-blue-600">Turizm</span></span>
                         )}
