@@ -106,6 +106,12 @@ export default function About() {
                             <div className="absolute inset-0 bg-[#0f172a]/10 mix-blend-multiply" />
                         </div>
 
+                        {/* Experience Badge - RESTORED */}
+                        <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-[#d4af37] rounded-full flex flex-col items-center justify-center text-white hidden md:flex border-8 border-white shadow-xl z-20 animate-fade-in">
+                            <span className="text-5xl font-bold">{stats[0].value}</span>
+                            <span className="text-sm uppercase tracking-wider font-semibold text-center leading-tight mt-1">{stats[0].label}</span>
+                        </div>
+
                         {/* Decorative Dot Grid */}
                         <div className="absolute -top-10 -left-10 z-[-1]">
                             <div className="grid grid-cols-5 gap-2">
