@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Build the application
-RUN npm run build
+RUN npm run build && npx drizzle-kit generate && npx drizzle-kit push
 
 # Expose port
 EXPOSE 3000
