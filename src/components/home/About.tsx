@@ -105,11 +105,7 @@ export default function About() {
                             />
                             <div className="absolute inset-0 bg-[#0f172a]/10 mix-blend-multiply" />
                         </div>
-                        {/* Experience Badge */}
-                        <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-[#d4af37] rounded-full flex flex-col items-center justify-center text-white hidden md:flex border-8 border-white shadow-xl z-20">
-                            <span className="text-5xl font-bold">{stats[0].value}</span>
-                            <span className="text-sm uppercase tracking-wider font-semibold">Yıllık Tecrübe</span>
-                        </div>
+
                         {/* Decorative Dot Grid */}
                         <div className="absolute -top-10 -left-10 z-[-1]">
                             <div className="grid grid-cols-5 gap-2">
@@ -130,13 +126,23 @@ export default function About() {
                             {aboutText}
                         </p>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
                             {features.map((item, index) => (
                                 <div key={index} className="flex items-center gap-3">
                                     <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#d4af37]/10 flex items-center justify-center">
                                         <CheckCircle2 className="w-4 h-4 text-[#d4af37]" />
                                     </div>
                                     <span className="text-gray-700 font-medium">{item}</span>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Statistics Grid - NOW VISIBLE */}
+                        <div className="grid grid-cols-3 gap-4 mb-10 border-t border-gray-100 pt-8">
+                            {stats.map((stat, index) => (
+                                <div key={index} className="text-center p-4 bg-gray-50 rounded-xl hover:bg-[#d4af37]/10 transition-colors duration-300">
+                                    <div className="text-3xl md:text-4xl font-bold text-[#d4af37] mb-2">{stat.value}</div>
+                                    <div className="text-sm text-gray-600 font-bold uppercase tracking-wide">{stat.label}</div>
                                 </div>
                             ))}
                         </div>
