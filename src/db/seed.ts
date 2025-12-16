@@ -21,6 +21,7 @@ async function seed() {
     console.log('Seeding database...');
 
     try {
+
         // Settings
         const existingSettings = await db.select().from(settings).limit(1);
 
@@ -39,7 +40,7 @@ async function seed() {
                 aboutText: 'Konya merkezli turizm şirketimiz, yıllardır süren deneyimimizle güvenli ve konforlu yolculuklar sunuyoruz.',
                 missionText: 'Müşteri memnuniyetini ön planda tutarak kaliteli hizmet sunmak.',
                 visionText: 'Türkiye\'nin en güvenilir transfer şirketi olmak.',
-                logoUrl: '/logo.png',
+                logoUrl: '/logo.svg',
                 stat1Label: 'Mutlu Müşteri',
                 stat1Value: '5000+',
                 stat2Label: 'Yıllık Deneyim',
@@ -49,7 +50,9 @@ async function seed() {
             });
             console.log('✅ Settings seeded.');
         } else {
-            console.log('ℹ️  Settings already exist.');
+            // settings varsa logoUrl'i güncelle
+            await db.update(settings).set({ logoUrl: '/logo.svg' }).where(eq(settings.id, existingSettings[0].id));
+            console.log('ℹ️  Settings updated (logoUrl).');
         }
 
         // Admin User
@@ -59,10 +62,9 @@ async function seed() {
             .where(eq(users.email, 'admin@42turizm.com'))
             .limit(1);
 
+        const plainPassword = 'admin123';
+
         if (existingAdmin.length === 0) {
-            // Not: Şu anki auth sisteminde şifreler düz metin olarak saklanıyor (src/app/admin/actions.ts dosyasına göre).
-            // Production ortamında bcrypt vb. kullanılması önerilir.
-            const plainPassword = 'admin123';
             await db.insert(users).values({
                 email: 'admin@42turizm.com',
                 password: plainPassword,
@@ -70,8 +72,13 @@ async function seed() {
             });
             console.log('✅ Admin user created (email: admin@42turizm.com, password: admin123)');
         } else {
-            console.log('ℹ️  Admin user already exists.');
+            // Kullanıcı varsa şifresini güncelle (Auth hatasını çözmek için)
+            await db.update(users)
+                .set({ password: plainPassword })
+                .where(eq(users.email, 'admin@42turizm.com'));
+            console.log('✅ Admin user password updated to: admin123');
         }
+
 
         // Hero Slides - SİL VE YENİDEN EKLE
         // Mevcut slaytları temizle (idempotency için)

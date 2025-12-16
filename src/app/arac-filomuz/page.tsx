@@ -4,6 +4,8 @@ import { vehicles } from '@/db/schema';
 import { eq, asc } from 'drizzle-orm';
 import FleetClient from './FleetClient';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
     title: 'Araç Filomuz | 42 Turizm',
     description: 'Her ihtiyaca uygun, modern ve bakımlı araçlarımızla konforlu yolculuklar sunuyoruz.',

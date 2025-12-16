@@ -7,6 +7,8 @@ import { db } from '@/db';
 import { services, tours, tourImages, settings } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 
+export const dynamic = 'force-dynamic';
+
 async function getContactInfo() {
     try {
         const result = await db.select().from(settings).limit(1);

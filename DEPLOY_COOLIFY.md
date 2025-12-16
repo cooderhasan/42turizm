@@ -59,12 +59,22 @@ npm run db:push && npm run build
 2.  **Logs** sekmesinden süreci takip edin.
 3.  Yeşil "Healthy" yazısını gördüğünüzde siteniz yayında demektir!
 
-## 7. Domain Ayarı
+## 7. Veri Yükleme (Seeding)
+Veritabanınız ilk başta boş olacaktır. Örnek verileri (admin kullanıcısı, ayarlar, slaytlar vb.) yüklemek için:
+
+1.  Coolify panelinde uygulamanızın **Terminal** (veya **Console**) sekmesine gidin.
+2.  Şu komutu yazıp Enter'a basın:
+    ```bash
+    npm run seed
+    ```
+3.  Çıktıda "✅ Seed operation completed successfully!" yazısını gördüğünüzde işlem tamamdır.
+
+## 8. Domain Ayarı
 *   **Domains** sekmesine gidin.
 *   Alan adınızı (örn: `https://si-t-eniz.com`) yazın ve kaydedin.
 *   DNS ayarlarınızdan (Cloudflare vb.) A kaydını Coolify sunucu IP'nize yönlendirmeyi unutmayın.
 
-## 8. Sık Karşılaşılan Hatalar (Troubleshooting)
+## 9. Sık Karşılaşılan Hatalar (Troubleshooting)
 
 ### "Failed to connect to github.com" Hatası / Exit Code 128
 Eğer deploy sırasında `fatal: unable to access ... Failed to connect to github.com port 443` hatası alıyorsanız, sunucunuzun (veya Docker konteynerinin) GitHub'a erişimi bir şekilde engellenmiştir.
