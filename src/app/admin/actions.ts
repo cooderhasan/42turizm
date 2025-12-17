@@ -1,5 +1,7 @@
 'use server'
 
+import * as bcrypt from 'bcryptjs';
+
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { db } from '@/db';
@@ -14,6 +16,8 @@ export async function login(prevState: any, formData: FormData) {
         return { error: 'Email ve şifre gereklidir.' };
     }
 
+    // ... imports
+
     try {
         const user = await db.select().from(users).where(eq(users.email, email)).limit(1);
 
@@ -21,7 +25,7 @@ export async function login(prevState: any, formData: FormData) {
             return { error: 'Kullanıcı bulunamadı.' };
         }
 
-        const validPassword = user[0].password === password; // In production, use bcrypt.compare
+        const validPassword = await bcrypt.compare(password, user[0].password);
 
         if (!validPassword) {
             return { error: 'Hatalı şifre.' };

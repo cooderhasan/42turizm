@@ -58,8 +58,34 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         notFound();
     }
 
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": post.title,
+        "image": post.imageUrl,
+        "author": {
+            "@type": "Person",
+            "name": post.author || "42 Turizm"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "42 Turizm",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.42turizm.com/logo.png"
+            }
+        },
+        "datePublished": post.publishedAt || post.createdAt,
+        "dateModified": post.updatedAt || post.createdAt,
+        "description": post.excerpt
+    };
+
     return (
         <div className="bg-gray-50 min-h-screen pb-20">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             {/* Article Header */}
             <div className="bg-[#0a192f] text-white pt-48 pb-32">
                 <div className="container mx-auto px-4 text-center max-w-4xl">

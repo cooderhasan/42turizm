@@ -56,6 +56,7 @@ async function seed() {
             // Do NOT overwrite logoUrl repeatedly. Let admin manage it.
         }
 
+
         // Admin User
         const existingAdmin = await db
             .select()
@@ -63,21 +64,22 @@ async function seed() {
             .where(eq(users.email, 'admin@42turizm.com'))
             .limit(1);
 
-        const plainPassword = 'admin123';
+        const plainPassword = 'Trzm42!StrongPass2025'; // New Strong Password
+        const hashedPassword = await bcrypt.hash(plainPassword, 10);
 
         if (existingAdmin.length === 0) {
             await db.insert(users).values({
                 email: 'admin@42turizm.com',
-                password: plainPassword,
+                password: hashedPassword,
                 role: 'admin',
             });
-            console.log('✅ Admin user created (email: admin@42turizm.com, password: admin123)');
+            console.log('✅ Admin user created.');
         } else {
-            // Kullanıcı varsa şifresini güncelle (Auth hatasını çözmek için)
+            // Update password
             await db.update(users)
-                .set({ password: plainPassword })
+                .set({ password: hashedPassword })
                 .where(eq(users.email, 'admin@42turizm.com'));
-            console.log('✅ Admin user password updated to: admin123');
+            console.log('✅ Admin user password updated (hashed).');
         }
 
 

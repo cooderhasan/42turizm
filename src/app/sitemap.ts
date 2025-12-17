@@ -1,10 +1,14 @@
 import { MetadataRoute } from 'next';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+import { db } from "@/db";
+import { services, blogPosts } from "@/db/schema";
+import { eq } from "drizzle-orm";
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = 'https://www.42turizm.com';
 
     // Static routes
-    const routes = [
+    const staticRoutes = [
         '',
         '/hizmetlerimiz',
         '/arac-filomuz',
@@ -19,9 +23,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: route === '' ? 1 : 0.8,
     }));
 
-    // In the future, we will fetch dynamic routes (blog posts, services) from DB here
-    // const posts = await getPosts();
-    // const postUrls = ...
+    // Dynamic Services
+    const activeServices = await db.select().from(services).where(eq(services.isActive, true));
+    const serviceRoutes = activeServices.map((service) => ({
+        url: `${baseUrl}/hizmetlerimiz/${service.slug}`,
+        lastModified: service.updatedAt || service.createdAt || new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.9,
+    }));
 
-    return [...routes];
+    // Dynamic Blog Posts
+    const posts = await db.select().from(blogPosts).where(eq(blogPosts.isPublished, true));
+    const blogRoutes = posts.map((post) => ({
+        url: `${baseUrl}/blog/${post.slug}`,
+        lastModified: post.updatedAt || post.publishedAt || post.createdAt || new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.7,
+    }));
+
+    return [...staticRoutes, ...serviceRoutes, ...blogRoutes];
 }

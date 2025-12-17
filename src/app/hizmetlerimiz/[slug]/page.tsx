@@ -95,8 +95,10 @@ export default async function ServiceDetailPage({ searchParams, params }: { sear
 
     // If we are in Gallery Mode for Cultural Tours
     if (isCulturalTours && activeTour) {
+        // ... existing gallery return ...
         return (
             <div className="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+                {/* JSON-LD for Gallery View (Optional, maybe ImageGallery schema?) */}
                 {/* Gallery Header */}
                 <div className="bg-white shadow-lg sticky top-16 z-40 border-b-2 border-[#d4af37]/20">
                     <div className="container mx-auto px-8 md:px-16 py-8">
@@ -157,9 +159,30 @@ export default async function ServiceDetailPage({ searchParams, params }: { sear
         );
     }
 
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": service.title,
+        "description": service.shortDescription,
+        "provider": {
+            "@type": "Organization",
+            "name": "42 Turizm",
+            "url": "https://www.42turizm.com"
+        },
+        "areaServed": {
+            "@type": "State",
+            "name": "Istanbul"
+        },
+        "url": `https://www.42turizm.com/hizmetlerimiz/${service.slug}`,
+        "image": service.imageUrl
+    };
 
     return (
         <div className="bg-gray-50 min-h-screen pb-20">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             {/* Hero Section */}
             <div className="relative h-[50vh] min-h-[400px]">
                 <Image
