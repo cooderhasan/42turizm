@@ -5,11 +5,17 @@ import Testimonials from "@/components/home/Testimonials";
 import References from "@/components/home/References";
 import BlogAndVideo from "@/components/home/BlogAndVideo";
 
-export default function Home() {
+import { db } from "@/db";
+import { services } from "@/db/schema";
+import { eq } from "drizzle-orm";
+
+export default async function Home() {
+  const serviceItems = await db.select().from(services).where(eq(services.isActive, true)).orderBy(services.order);
+
   return (
     <main className="min-h-screen">
       <Hero />
-      <Services />
+      <Services services={serviceItems} />
       <About />
       <BlogAndVideo />
       <Testimonials />

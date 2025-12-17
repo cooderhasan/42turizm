@@ -3,68 +3,41 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Bus, Map, Plane, Car, Building2, ShieldCheck, Phone } from 'lucide-react';
+import { ArrowRight, Bus, Map, Plane, Car, Building2, ShieldCheck, Phone, User } from 'lucide-react';
 
-const SERVICES = [
-    {
-        id: 1,
-        title: 'Servis Taşımacılığı',
-        description: 'Personel ve öğrenci taşımacılığında güvenli, zamanında ve konforlu ulaşım çözümleri sunuyoruz.',
-        icon: <Bus className="w-12 h-12 text-blue-600 group-hover:text-white transition-colors" />,
-        image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2069&auto=format&fit=crop',
-        link: '/hizmetlerimiz/servis-tasimaciligi'
-    },
-    {
-        id: 2,
-        title: 'Kültür Turları',
-        description: 'Tarihi ve doğal güzellikleri keşfetmeniz için yurt içi ve yurt dışı kültür turları düzenliyoruz.',
-        icon: <Map className="w-12 h-12 text-blue-600 group-hover:text-white transition-colors" />,
-        image: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=2021&auto=format&fit=crop',
-        link: '/hizmetlerimiz/kultur-turlari'
-    },
-    {
-        id: 3,
-        title: 'Turizm Taşımacılığı',
-        description: 'Turistik geziler, bayi toplantıları ve organizasyonlar için geniş araç filomuzla hizmetinizdeyiz.',
-        icon: <Bus className="w-12 h-12 text-blue-600 group-hover:text-white transition-colors" />,
-        image: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=2070&auto=format&fit=crop',
-        link: '/hizmetlerimiz/turizm-tasimaciligi'
-    },
-    {
-        id: 4,
-        title: 'Havalimanı Transferi',
-        description: 'Havalimanından evinize veya otelinize, zamanında ve konforlu transfer hizmeti.',
-        icon: <Plane className="w-12 h-12 text-blue-600 group-hover:text-white transition-colors" />,
-        image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074&auto=format&fit=crop',
-        link: '/hizmetlerimiz/havalimani-transferi'
-    },
-    {
-        id: 5,
-        title: 'Sürücülü VIP Araç',
-        description: 'Özel günleriniz ve iş seyahatleriniz için protokol deneyimine sahip sürücülerimizle VIP hizmet.',
-        icon: <Car className="w-12 h-12 text-blue-600 group-hover:text-white transition-colors" />,
-        image: 'https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=2070&auto=format&fit=crop',
-        link: '/hizmetlerimiz/vip-arac-kiralama'
-    },
-    {
-        id: 6,
-        title: 'Filo Kiralama',
-        description: 'Şirketinizin ihtiyaç duyduğu binek ve ticari araçları uzun dönem kiralama avantajlarıyla sunuyoruz.',
-        icon: <Building2 className="w-12 h-12 text-blue-600 group-hover:text-white transition-colors" />,
-        image: 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070&auto=format&fit=crop',
-        link: '/hizmetlerimiz/filo-kiralama'
-    },
-    {
-        id: 7,
-        title: 'Güvenlik & Temizlik',
-        description: 'Tesisleriniz için entegre tesis yönetimi, profesyonel güvenlik ve temizlik hizmetleri.',
-        icon: <ShieldCheck className="w-12 h-12 text-blue-600 group-hover:text-white transition-colors" />,
-        image: 'https://images.unsplash.com/photo-1581578731117-10d52143b1e8?q=80&w=2070&auto=format&fit=crop',
-        link: '/hizmetlerimiz/guvenlik-temizlik'
-    }
-];
+// Icon mapping
+const ICON_MAP: Record<string, React.ElementType> = {
+    'Bus': Bus,
+    'Map': Map,
+    'Plane': Plane,
+    'Car': Car,
+    'Building2': Building2,
+    'ShieldCheck': ShieldCheck,
+    'Phone': Phone,
+    'User': User // Added User just in case
+};
 
-export default function Services() {
+interface ServiceItem {
+    id: number;
+    title: string;
+    description: string | null; // Note: In DB it's detailedDescription or shortDescription? Schema has both. Let's use shortDescription for the card.
+    shortDescription: string | null;
+    slug: string;
+    iconName: string | null;
+    imageUrl: string | null;
+}
+
+interface ServicesProps {
+    services: any[]; // Using any[] for now to avoid strict schema type import issues, or better define partial shape
+}
+
+export default function Services({ services }: ServicesProps) {
+    const getIcon = (iconName: string | null) => {
+        if (!iconName) return <Bus className="w-12 h-12 text-blue-600 group-hover:text-white transition-colors" />;
+        const IconComponent = ICON_MAP[iconName] || Bus;
+        return <IconComponent className="w-12 h-12 text-blue-600 group-hover:text-white transition-colors" />;
+    };
+
     return (
         <section className="py-24 bg-white">
             <div className="container mx-auto px-4">
@@ -80,30 +53,31 @@ export default function Services() {
 
                 {/* Services Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {SERVICES.map((service) => (
+                    {services.map((service) => (
                         <div
                             key={service.id}
                             className="group bg-gray-50 rounded-xl overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 hover:border-[#d4af37]/30"
                         >
                             {/* Image Area */}
                             <div className="relative h-56 overflow-hidden">
-                                <Image
-                                    src={service.image}
-                                    alt={service.title}
-                                    fill
-                                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                                />
+                                {service.imageUrl ? (
+                                    <Image
+                                        src={service.imageUrl}
+                                        alt={service.title}
+                                        fill
+                                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                    />
+                                ) : (
+                                    <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400">
+                                        No Image
+                                    </div>
+                                )}
                                 <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a]/90 via-[#0f172a]/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
 
-                                {/* Floating Icon - Now inside image area for cleaner look */}
+                                {/* Floating Icon */}
                                 <div className="absolute bottom-4 right-4 w-14 h-14 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl flex items-center justify-center group-hover:bg-[#d4af37] group-hover:border-[#d4af37] transition-all duration-300">
-                                    {/* We need to clone the icon to change classes if it's a React Element, 
-                                        but for simplicity we'll just wrap it and control color via CSS or let the icon be white */}
                                     <div className="text-white">
-                                        {/* This assumes icons passed in are rendered white or inherit colour. 
-                                           Since we are replacing the logic, let's just make sure the icon logic above uses appropriate classes.
-                                        */}
-                                        {React.cloneElement(service.icon as React.ReactElement<any>, { className: "w-7 h-7 text-white" })}
+                                        {React.cloneElement(getIcon(service.iconName) as React.ReactElement<any>, { className: "w-7 h-7 text-white" })}
                                     </div>
                                 </div>
                             </div>
@@ -114,11 +88,11 @@ export default function Services() {
                                     {service.title}
                                 </h4>
                                 <p className="text-gray-600 mb-6 line-clamp-3 text-sm leading-relaxed">
-                                    {service.description}
+                                    {service.shortDescription || service.description}
                                 </p>
 
                                 <Link
-                                    href={service.link}
+                                    href={`/hizmetlerimiz/${service.slug}`}
                                     className="inline-flex items-center text-[#0f172a] font-bold text-sm uppercase tracking-wider group-hover:text-[#d4af37] transition-colors"
                                 >
                                     Detaylı İncele <ArrowRight className="ml-2 w-4 h-4" />
