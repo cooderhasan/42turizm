@@ -12,6 +12,7 @@ import {
     testimonials
 } from './schema';
 import { eq } from 'drizzle-orm';
+import bcrypt from 'bcryptjs';
 
 async function seed() {
     const connectionString = process.env.DATABASE_URL;
