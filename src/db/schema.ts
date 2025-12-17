@@ -36,6 +36,7 @@ export const settings = pgTable('settings', {
     stat2Value: text('stat2_value'),
     stat3Label: text('stat3_label'),
     stat3Value: text('stat3_value'),
+    footerText: text('footer_text'), // Added footer text
     updatedAt: timestamp('updated_at').defaultNow(),
 });
 

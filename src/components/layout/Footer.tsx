@@ -17,7 +17,8 @@ export default function Footer() {
     const [contactInfo, setContactInfo] = useState({
         phone1: '+90 555 555 55 55',
         email: 'info@42turizm.com',
-        address: 'İstanbul, Türkiye'
+        address: 'İstanbul, Türkiye',
+        footerText: "İstanbul ve İstanbul'un önde gelen turizm, personel ve öğrenci taşımacılığı firması. Güvenli, konforlu ve zamanında ulaşım çözümleri."
     });
     const [logoUrl, setLogoUrl] = useState<string | null>(null);
     const [logoTimestamp, setLogoTimestamp] = useState(Date.now());
@@ -62,7 +63,8 @@ export default function Footer() {
                     setContactInfo({
                         phone1: data.data.phone1 || '+90 555 555 55 55',
                         email: data.data.email || 'info@42turizm.com',
-                        address: data.data.address || 'İstanbul, Türkiye'
+                        address: data.data.address || 'İstanbul, Türkiye',
+                        footerText: data.data.footerText || "İstanbul ve İstanbul'un önde gelen turizm, personel ve öğrenci taşımacılığı firması. Güvenli, konforlu ve zamanında ulaşım çözümleri."
                     });
                 }
             } catch (error) {
@@ -105,8 +107,7 @@ export default function Footer() {
                             }
                         </Link>
                         <p className="mb-6 text-gray-400 leading-relaxed">
-                            İstanbul ve İstanbul'un önde gelen turizm, personel ve öğrenci taşımacılığı firması.
-                            Güvenli, konforlu ve zamanında ulaşım çözümleri.
+                            {contactInfo.footerText}
                         </p>
                         <div className="flex gap-4">
                             <a href={socialMedia.instagramUrl} target="_blank" rel="noopener noreferrer" className="bg-white/10 p-2 rounded-full hover:bg-[#d4af37] transition-colors text-white"><Instagram size={18} /></a>

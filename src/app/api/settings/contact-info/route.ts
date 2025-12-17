@@ -31,7 +31,8 @@ export async function GET() {
                 stat2Label: data.stat2Label,
                 stat2Value: data.stat2Value,
                 stat3Label: data.stat3Label,
-                stat3Value: data.stat3Value
+                stat3Value: data.stat3Value,
+                footerText: data.footerText
             }
         });
 

@@ -90,6 +90,24 @@ export default function SettingsPage() {
 
                 {/* Contact Info */}
                 <div className="space-y-4 pt-4">
+                    <h2 className="text-xl font-semibold text-gray-900 border-b pb-2">Footer Ayarları</h2>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Footer Metni</label>
+                        <textarea
+                            name="footerText"
+                            defaultValue={initialData.footerText || ''}
+                            placeholder="İstanbul ve İstanbul'un önde gelen..."
+                            rows={3}
+                            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
+                        />
+                        <p className="text-xs text-gray-500 mt-1">
+                            💡 Footer'da logo altında yer alan kısa açıklama metni.
+                        </p>
+                    </div>
+                </div>
+
+                {/* Contact Info */}
+                <div className="space-y-4 pt-4">
                     <h2 className="text-xl font-semibold text-gray-900 border-b pb-2">İletişim Bilgileri</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="md:col-span-2">

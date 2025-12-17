@@ -48,6 +48,7 @@ export async function updateSettings(prevState: any, formData: FormData) {
         const phone2 = formData.get('phone2') as string;
         const email = formData.get('email') as string;
         const whatsappNumber = formData.get('whatsappNumber') as string;
+        const footerText = formData.get('footerText') as string; // Added footerText
         const aboutText = formData.get('aboutText') as string;
         const missionText = formData.get('missionText') as string;
         const visionText = formData.get('visionText') as string;
@@ -114,7 +115,8 @@ export async function updateSettings(prevState: any, formData: FormData) {
                 videoUrl,
                 videoThumbnailUrl,
                 googleMapsEmbedUrl,
-                logoUrl
+                logoUrl,
+                footerText,
             });
         } else {
             await db.update(settings)
@@ -144,6 +146,7 @@ export async function updateSettings(prevState: any, formData: FormData) {
                     stat2Value,
                     stat3Label,
                     stat3Value,
+                    footerText,
                     updatedAt: new Date(),
                 })
                 .where(eq(settings.id, existing[0].id));
