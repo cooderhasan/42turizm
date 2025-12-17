@@ -23,9 +23,10 @@ async function saveImage(file: File): Promise<string | null> {
         const filepath = join(uploadDir, filename);
 
         await writeFile(filepath, buffer);
-        return `/uploads/services/${filename}`;
+        console.log(`[saveImage] File saved to: ${filepath}`);
+        return `/api/uploads/services/${filename}`;
     } catch (error) {
-        console.error('Error saving image:', error);
+        console.error('[saveImage] Error saving image:', error);
         throw new Error('Görsel kaydedilemedi.');
     }
 }
@@ -55,8 +56,10 @@ export async function createService(prevState: any, formData: FormData) {
         const slug = formData.get('slug') as string;
         const shortDescription = formData.get('shortDescription') as string;
         const detailedDescription = formData.get('detailedDescription') as string;
-        // const imageUrl = formData.get('imageUrl') as string;
+
         const imageFile = formData.get('image') as File;
+        console.log('[createService] Image File:', imageFile ? { name: imageFile.name, size: imageFile.size, type: imageFile.type } : 'null');
+
         const iconName = formData.get('iconName') as string;
         const serviceArea = formData.get('serviceArea') as string;
 
@@ -105,9 +108,14 @@ export async function updateService(id: number, prevState: any, formData: FormDa
         const slug = formData.get('slug') as string;
         const shortDescription = formData.get('shortDescription') as string;
         const detailedDescription = formData.get('detailedDescription') as string;
-        // const imageUrl = formData.get('imageUrl') as string;
+
         const imageFile = formData.get('image') as File;
         const existingImageUrl = formData.get('existingImageUrl') as string;
+
+        console.log('[updateService] ID:', id);
+        console.log('[updateService] Existing URL:', existingImageUrl);
+        console.log('[updateService] Image File:', imageFile ? { name: imageFile.name, size: imageFile.size, type: imageFile.type } : 'null');
+
         const iconName = formData.get('iconName') as string;
         const serviceArea = formData.get('serviceArea') as string;
 
@@ -116,7 +124,10 @@ export async function updateService(id: number, prevState: any, formData: FormDa
         if (imageFile && imageFile.size > 0) {
             const savedPath = await saveImage(imageFile);
             if (savedPath) imageUrl = savedPath;
+        } else {
+            console.log('[updateService] No new image file provided or size is 0. Keeping existing:', imageUrl);
         }
+
         const isActive = formData.get('isActive') === 'on';
         const order = Number(formData.get('order')) || 0;
         const featuresRaw = formData.get('features') as string;
