@@ -22,7 +22,8 @@ async function saveImage(file: File): Promise<string | null> {
         const filepath = join(uploadDir, filename);
 
         await writeFile(filepath, buffer);
-        return `/uploads/testimonials/${filename}`;
+        console.log(`[saveImage] Testimonial file saved to: ${filepath}`);
+        return `/api/uploads/testimonials/${filename}`;
     } catch (error) {
         console.error('Error saving testimonial image:', error);
         throw new Error('Yorum görseli kaydedilemedi.');
