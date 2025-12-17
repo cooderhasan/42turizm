@@ -23,23 +23,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: route === '' ? 1 : 0.8,
     }));
 
-    // Dynamic Services
-    const activeServices = await db.select().from(services).where(eq(services.isActive, true));
-    const serviceRoutes = activeServices.map((service) => ({
-        url: `${baseUrl}/hizmetlerimiz/${service.slug}`,
-        lastModified: service.updatedAt || service.createdAt || new Date(),
-        changeFrequency: 'weekly' as const,
-        priority: 0.9,
-    }));
+    // Dynamic Routes
+    let serviceRoutes: MetadataRoute.Sitemap = [];
+    let blogRoutes: MetadataRoute.Sitemap = [];
 
-    // Dynamic Blog Posts
-    const posts = await db.select().from(blogPosts).where(eq(blogPosts.isPublished, true));
-    const blogRoutes = posts.map((post) => ({
-        url: `${baseUrl}/blog/${post.slug}`,
-        lastModified: post.updatedAt || post.publishedAt || post.createdAt || new Date(),
-        changeFrequency: 'weekly' as const,
-        priority: 0.7,
-    }));
+    try {
+        // Dynamic Services
+        const activeServices = await db.select().from(services).where(eq(services.isActive, true));
+        serviceRoutes = activeServices.map((service) => ({
+            url: `${baseUrl}/hizmetlerimiz/${service.slug}`,
+            lastModified: service.updatedAt || service.createdAt || new Date(),
+            changeFrequency: 'weekly' as const,
+            priority: 0.9,
+        }));
+
+        // Dynamic Blog Posts
+        const posts = await db.select().from(blogPosts).where(eq(blogPosts.isPublished, true));
+        blogRoutes = posts.map((post) => ({
+            url: `${baseUrl}/blog/${post.slug}`,
+            lastModified: post.updatedAt || post.publishedAt || post.createdAt || new Date(),
+            changeFrequency: 'weekly' as const,
+            priority: 0.7,
+        }));
+    } catch (error) {
+        console.warn("Could not fetch dynamic routes for sitemap:", error);
+    }
 
     return [...staticRoutes, ...serviceRoutes, ...blogRoutes];
 }

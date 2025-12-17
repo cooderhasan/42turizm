@@ -17,8 +17,15 @@ import { db } from "@/db";
 import { settings } from "@/db/schema";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const settingsData = await db.select().from(settings).limit(1);
-  const siteSettings = settingsData[0];
+  let siteSettings: typeof settings.$inferSelect | undefined;
+
+  try {
+    const settingsData = await db.select().from(settings).limit(1);
+    siteSettings = settingsData[0];
+  } catch (error) {
+    console.warn("Could not fetch settings for metadata:", error);
+    // Fallback or ignore for build time
+  }
 
   return {
     title: {
@@ -53,8 +60,14 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const settingsData = await db.select().from(settings).limit(1);
-  const siteSettings = settingsData[0];
+  let siteSettings: typeof settings.$inferSelect | undefined;
+
+  try {
+    const settingsData = await db.select().from(settings).limit(1);
+    siteSettings = settingsData[0];
+  } catch (error) {
+    console.warn("Could not fetch settings for RootLayout:", error);
+  }
 
   const jsonLd = {
     "@context": "https://schema.org",
