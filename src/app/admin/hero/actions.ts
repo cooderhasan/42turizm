@@ -24,7 +24,8 @@ async function saveImage(file: File): Promise<string | null> {
         const filepath = join(uploadDir, filename);
 
         await writeFile(filepath, buffer);
-        return `/uploads/hero/${filename}`;
+        console.log(`[saveImage] Hero file saved to: ${filepath}`);
+        return `/api/uploads/hero/${filename}`;
     } catch (error) {
         console.error('Error saving image:', error);
         throw new Error('Görsel kaydedilemedi.');
@@ -106,6 +107,10 @@ export async function updateHeroSlide(id: number, prevState: any, formData: Form
 
         const imageFile = formData.get('image') as File;
         const existingImageUrl = formData.get('existingImageUrl') as string;
+
+        console.log('[updateHeroSlide] ID:', id);
+        console.log('[updateHeroSlide] Existing URL:', existingImageUrl);
+        console.log('[updateHeroSlide] Image File:', imageFile ? { name: imageFile.name, size: imageFile.size, type: imageFile.type } : 'null');
 
         if (!title) {
             return { success: false, message: 'Başlık gereklidir.' };
