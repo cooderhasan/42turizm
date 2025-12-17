@@ -77,6 +77,14 @@ export default function SettingsPage() {
                                 sizeHint="Önerilen: 200x60px .PNG (Şeffaf Arka Plan)"
                             />
                         </div>
+                        <div className="md:col-span-2">
+                            <ImageUpload
+                                name="faviconFile"
+                                defaultValue={initialData.faviconUrl}
+                                label="Site Favicon (Tarayıcı İkonu)"
+                                sizeHint="Önerilen: 32x32px .ICO veya .PNG"
+                            />
+                        </div>
                     </div>
                 </div>
 

@@ -27,6 +27,7 @@ export const settings = pgTable('settings', {
     videoUrl: text('video_url'),
     videoThumbnailUrl: text('video_thumbnail_url'), // Added video thumbnail URL
     logoUrl: text('logo_url'), // Added logoUrl
+    faviconUrl: text('favicon_url'), // Added faviconUrl
     googleMapsEmbedUrl: text('google_maps_embed_url'), // Added Google Maps embed URL
     aboutImageUrl: text('about_image_url'), // Added About section image URL
     stat1Label: text('stat1_label'), // Added stat labels

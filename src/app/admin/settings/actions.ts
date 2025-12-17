@@ -76,6 +76,16 @@ export async function updateSettings(prevState: any, formData: FormData) {
             if (savedPath) logoUrl = savedPath;
         }
 
+        const faviconFile = formData.get('faviconFile') as File;
+        const existingFaviconUrl = formData.get('faviconFile_current') as string;
+
+        // Handle Favicon Upload
+        let faviconUrl = existingFaviconUrl;
+        if (faviconFile && faviconFile.size > 0) {
+            const savedPath = await saveImage(faviconFile, 'favicon');
+            if (savedPath) faviconUrl = savedPath;
+        }
+
         // Handle About Image Upload
         let aboutImageUrl = existingAboutImageUrl;
         if (aboutImageFile && aboutImageFile.size > 0) {
@@ -126,6 +136,7 @@ export async function updateSettings(prevState: any, formData: FormData) {
                     videoThumbnailUrl,
                     googleMapsEmbedUrl,
                     logoUrl,
+                    faviconUrl,
                     aboutImageUrl,
                     stat1Label,
                     stat1Value,
