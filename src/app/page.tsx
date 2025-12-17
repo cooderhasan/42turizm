@@ -6,11 +6,12 @@ import References from "@/components/home/References";
 import BlogAndVideo from "@/components/home/BlogAndVideo";
 
 import { db } from "@/db";
-import { services } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { services, references } from "@/db/schema";
+import { eq, asc } from "drizzle-orm";
 
 export default async function Home() {
   const serviceItems = await db.select().from(services).where(eq(services.isActive, true)).orderBy(services.order);
+  const referencesData = await db.select().from(references).orderBy(asc(references.order));
 
   return (
     <main className="min-h-screen">
@@ -19,7 +20,7 @@ export default async function Home() {
       <About />
       <BlogAndVideo />
       <Testimonials />
-      <References />
+      <References references={referencesData} />
     </main>
   );
 }
