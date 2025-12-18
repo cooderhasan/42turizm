@@ -32,7 +32,7 @@ export default function References({ references }: ReferencesProps) {
                             <div className="embla__slide flex-[0_0_50%] md:flex-[0_0_25%] lg:flex-[0_0_16.666%] min-w-0 px-8" key={ref.id}>
                                 <div className="grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100">
                                     {/* Using a generic placeholder for logos, styled to look like a logo strip */}
-                                    <div className="h-12 relative w-full aspect-[3/1]">
+                                    <div className="h-24 relative w-full">
                                         <Image
                                             src={ref.imageUrl}
                                             alt={ref.name}
