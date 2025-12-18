@@ -9,26 +9,41 @@ import ImageUpload from '@/components/admin/ImageUpload';
 export default function SettingsPage() {
     const [state, formAction, isPending] = useActionState(updateSettings, { success: false, message: '' });
     const [initialData, setInitialData] = useState<any>(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     // State for Rich Editors
     const [aboutText, setAboutText] = useState('');
     const [missionText, setMissionText] = useState('');
     const [visionText, setVisionText] = useState('');
 
-    useEffect(() => {
-        async function loadData() {
+    async function loadData() {
+        try {
             const data = await getSettings();
+            setInitialData(data || {}); // Default to empty object if no settings exist
             if (data) {
-                setInitialData(data);
                 setAboutText(data.aboutText || '');
                 setMissionText(data.missionText || '');
                 setVisionText(data.visionText || '');
             }
+        } catch (error) {
+            console.error('Error loading settings:', error);
+        } finally {
+            setIsLoading(false);
         }
+    }
+
+    useEffect(() => {
         loadData();
     }, []);
 
-    if (!initialData) {
+    // Reload data after successful update to ensure fresh state (especially for images)
+    useEffect(() => {
+        if (state.success) {
+            loadData();
+        }
+    }, [state.success]);
+
+    if (isLoading) {
         return <div className="p-8">Yükleniyor...</div>;
     }
 
@@ -56,7 +71,7 @@ export default function SettingsPage() {
                             <input
                                 type="text"
                                 name="siteTitle"
-                                defaultValue={initialData.siteTitle}
+                                defaultValue={initialData?.siteTitle}
                                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
                             />
                         </div>
@@ -65,14 +80,14 @@ export default function SettingsPage() {
                             <input
                                 type="text"
                                 name="siteDescription"
-                                defaultValue={initialData.siteDescription}
+                                defaultValue={initialData?.siteDescription}
                                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
                             />
                         </div>
                         <div className="md:col-span-2">
                             <ImageUpload
                                 name="logoFile"
-                                defaultValue={initialData.logoUrl}
+                                defaultValue={initialData?.logoUrl}
                                 label="Site Logosu"
                                 sizeHint="Önerilen: 200x60px .PNG (Şeffaf Arka Plan)"
                             />
@@ -80,7 +95,7 @@ export default function SettingsPage() {
                         <div className="md:col-span-2">
                             <ImageUpload
                                 name="faviconFile"
-                                defaultValue={initialData.faviconUrl}
+                                defaultValue={initialData?.faviconUrl}
                                 label="Site Favicon (Tarayıcı İkonu)"
                                 sizeHint="Önerilen: 32x32px .ICO veya .PNG"
                             />
@@ -95,7 +110,7 @@ export default function SettingsPage() {
                         <label className="block text-sm font-medium text-gray-700 mb-1">Footer Metni</label>
                         <textarea
                             name="footerText"
-                            defaultValue={initialData.footerText || ''}
+                            defaultValue={initialData?.footerText || ''}
                             placeholder="İstanbul ve İstanbul'un önde gelen..."
                             rows={3}
                             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
@@ -115,7 +130,7 @@ export default function SettingsPage() {
                             <input
                                 type="text"
                                 name="address"
-                                defaultValue={initialData.address}
+                                defaultValue={initialData?.address}
                                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
                             />
                         </div>
@@ -124,7 +139,7 @@ export default function SettingsPage() {
                             <input
                                 type="text"
                                 name="phone1"
-                                defaultValue={initialData.phone1}
+                                defaultValue={initialData?.phone1}
                                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
                             />
                         </div>
@@ -133,7 +148,7 @@ export default function SettingsPage() {
                             <input
                                 type="text"
                                 name="phone2"
-                                defaultValue={initialData.phone2}
+                                defaultValue={initialData?.phone2}
                                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
                             />
                         </div>
@@ -142,7 +157,7 @@ export default function SettingsPage() {
                             <input
                                 type="email"
                                 name="email"
-                                defaultValue={initialData.email}
+                                defaultValue={initialData?.email}
                                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
                             />
                         </div>
@@ -154,7 +169,7 @@ export default function SettingsPage() {
                             <input
                                 type="text"
                                 name="whatsappNumber"
-                                defaultValue={initialData.whatsappNumber}
+                                defaultValue={initialData?.whatsappNumber}
                                 placeholder="Örn: 905551234567"
                                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
                             />
@@ -167,7 +182,7 @@ export default function SettingsPage() {
                             <input
                                 type="url"
                                 name="googleMapsEmbedUrl"
-                                defaultValue={initialData.googleMapsEmbedUrl || ''}
+                                defaultValue={initialData?.googleMapsEmbedUrl || ''}
                                 placeholder="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.650490010629!2d29.02330777648564!3d40.99049997135111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab86104d49651%3A0xe62c866d9f041d8e!2sKad%C4%B1k%C3%B6y%20R%C4%B1ht%C4%B1m!5e0!3m2!1str!2str!4v1709650000000!5m2!1str!2str"
                                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
                             />
@@ -187,7 +202,7 @@ export default function SettingsPage() {
                             <input
                                 type="url"
                                 name="videoUrl"
-                                defaultValue={initialData.videoUrl || ''}
+                                defaultValue={initialData?.videoUrl || ''}
                                 placeholder="https://www.youtube.com/watch?v=..."
                                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
                             />
@@ -200,7 +215,7 @@ export default function SettingsPage() {
                             <input
                                 type="url"
                                 name="videoThumbnailUrl"
-                                defaultValue={initialData.videoThumbnailUrl || ''}
+                                defaultValue={initialData?.videoThumbnailUrl || ''}
                                 placeholder="https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg"
                                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
                             />
@@ -218,7 +233,7 @@ export default function SettingsPage() {
                         <div className="md:col-span-2">
                             <ImageUpload
                                 name="aboutImage"
-                                defaultValue={initialData.aboutImageUrl}
+                                defaultValue={initialData?.aboutImageUrl}
                                 label="Hakkımızda Resmi"
                                 sizeHint="Önerilen: 1200x800px .JPG, .PNG"
                             />
@@ -228,7 +243,7 @@ export default function SettingsPage() {
                             <input
                                 type="text"
                                 name="stat1Label"
-                                defaultValue={initialData.stat1Label || 'Yıllık Tecrübe'}
+                                defaultValue={initialData?.stat1Label || 'Yıllık Tecrübe'}
                                 placeholder="Yıllık Tecrübe"
                                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
                             />
@@ -238,7 +253,7 @@ export default function SettingsPage() {
                             <input
                                 type="text"
                                 name="stat1Value"
-                                defaultValue={initialData.stat1Value || '15+'}
+                                defaultValue={initialData?.stat1Value || '15+'}
                                 placeholder="15+"
                                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
                             />
@@ -248,7 +263,7 @@ export default function SettingsPage() {
                             <input
                                 type="text"
                                 name="stat2Label"
-                                defaultValue={initialData.stat2Label || 'Mutlu Müşteri'}
+                                defaultValue={initialData?.stat2Label || 'Mutlu Müşteri'}
                                 placeholder="Mutlu Müşteri"
                                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
                             />
@@ -258,7 +273,7 @@ export default function SettingsPage() {
                             <input
                                 type="text"
                                 name="stat2Value"
-                                defaultValue={initialData.stat2Value || '10k+'}
+                                defaultValue={initialData?.stat2Value || '10k+'}
                                 placeholder="10k+"
                                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
                             />
@@ -268,7 +283,7 @@ export default function SettingsPage() {
                             <input
                                 type="text"
                                 name="stat3Label"
-                                defaultValue={initialData.stat3Label || 'Araç Filosu'}
+                                defaultValue={initialData?.stat3Label || 'Araç Filosu'}
                                 placeholder="Araç Filosu"
                                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
                             />
@@ -278,7 +293,7 @@ export default function SettingsPage() {
                             <input
                                 type="text"
                                 name="stat3Value"
-                                defaultValue={initialData.stat3Value || '50+'}
+                                defaultValue={initialData?.stat3Value || '50+'}
                                 placeholder="50+"
                                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
                             />
@@ -335,7 +350,7 @@ export default function SettingsPage() {
                             <input
                                 type="url"
                                 name="instagramUrl"
-                                defaultValue={initialData.instagramUrl}
+                                defaultValue={initialData?.instagramUrl}
                                 placeholder="https://instagram.com/hesapadiniz"
                                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
                             />
@@ -345,7 +360,7 @@ export default function SettingsPage() {
                             <input
                                 type="url"
                                 name="facebookUrl"
-                                defaultValue={initialData.facebookUrl}
+                                defaultValue={initialData?.facebookUrl}
                                 placeholder="https://facebook.com/hesapadiniz"
                                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
                             />
@@ -355,7 +370,7 @@ export default function SettingsPage() {
                             <input
                                 type="url"
                                 name="linkedinUrl"
-                                defaultValue={initialData.linkedinUrl}
+                                defaultValue={initialData?.linkedinUrl}
                                 placeholder="https://linkedin.com/company/hesapadiniz"
                                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-900 placeholder-gray-500"
                             />
