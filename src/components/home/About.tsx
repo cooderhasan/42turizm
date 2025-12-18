@@ -11,8 +11,9 @@ const DEFAULT_STATS = [
     { label: 'Araç Filosu', value: '50+', icon: Award },
 ];
 
-export default function About() {
-    const [aboutText, setAboutText] = useState('42 Turizm olarak, 2008 yılından bu yana taşımacılık sektöründe güven ve kaliteyi bir araya getiriyoruz. Modern araç filomuz, deneyimli sürücü kadromuz ve teknolojik altyapımızla personel taşımacılığı, öğrenci servis hizmetleri ve VIP transfer çözümleri sunuyoruz.');
+export default function About({ settings }: { settings?: any }) {
+    const defaultText = '42 Turizm olarak, 2008 yılından bu yana taşımacılık sektöründe güven ve kaliteyi bir araya getiriyoruz. Modern araç filomuz, deneyimli sürücü kadromuz ve teknolojik altyapımızla personel taşımacılığı, öğrenci servis hizmetleri ve VIP transfer çözümleri sunuyoruz.';
+    const [aboutText, setAboutText] = useState(defaultText);
     const [features, setFeatures] = useState([
         'Tam donanımlı ve konforlu araç filosu',
         'SRC belgeli, psikoteknik testten geçmiş profesyonel sürücüler',
@@ -22,12 +23,72 @@ export default function About() {
     const [aboutImageUrl, setAboutImageUrl] = useState('https://images.unsplash.com/photo-1556125574-d7f27ec36a06?q=80&w=2070&auto=format&fit=crop');
     const [stats, setStats] = useState(DEFAULT_STATS);
 
+    // Initial load from settings prop if available
     useEffect(() => {
+        if (settings) {
+            const text = settings.aboutText;
+            // Try to extract features from the text (simple approach)
+            const featureLines = text ? text.match(/• (.*?)(?=\n•|\n\n|$)/g) || [] : [];
+            const extractedFeatures = featureLines.map((f: string) => f.replace('• ', '').trim());
+
+            if (extractedFeatures.length > 0) {
+                setFeatures(extractedFeatures.slice(0, 4));
+            }
+
+            // Set the about text (first paragraph)
+            const firstParagraph = text ? text.split('\n\n')[0] || text : defaultText;
+            // Remove HTML tags from the text (more comprehensive cleaning)
+            const cleanText = firstParagraph
+                .replace(/<[^>]*>/g, '') // Remove all HTML tags
+                .replace(/&nbsp;/g, ' ') // Replace &nbsp; with space
+                .replace(/&/g, '&')
+                .replace(/</g, '<')
+                .replace(/>/g, '>')
+                .replace(/"/g, '"')
+                .replace(/'/g, "'")
+                .trim();
+
+            if (cleanText) setAboutText(cleanText);
+
+            // Set image if available
+            if (settings.aboutImageUrl) {
+                setAboutImageUrl(settings.aboutImageUrl);
+            }
+
+            // Set stats if available
+            if (settings.stat1Label && settings.stat1Value) {
+                const customStats = [
+                    {
+                        label: settings.stat1Label,
+                        value: settings.stat1Value,
+                        icon: Calendar
+                    },
+                    {
+                        label: settings.stat2Label || DEFAULT_STATS[1].label,
+                        value: settings.stat2Value || DEFAULT_STATS[1].value,
+                        icon: Users
+                    },
+                    {
+                        label: settings.stat3Label || DEFAULT_STATS[2].label,
+                        value: settings.stat3Value || DEFAULT_STATS[2].value,
+                        icon: Award
+                    }
+                ];
+                setStats(customStats);
+            }
+        }
+    }, [settings]);
+
+    useEffect(() => {
+        if (settings) return; // Skip if we have server data
         async function fetchAboutData() {
             try {
                 const response = await fetch('/api/settings/contact-info');
                 const data = await response.json();
                 if (data.success && data.data) {
+                    // Logic duplication here is unfortunate but ensures fallback works. 
+                    // Ideally we abstract this processing but for now inline is fine for speed.
+
                     // Parse the about text to extract features if needed
                     const text = data.data.aboutText;
 
@@ -40,7 +101,7 @@ export default function About() {
                     }
 
                     // Set the about text (first paragraph)
-                    const firstParagraph = text ? text.split('\n\n')[0] || text : '42 Turizm olarak, 2008 yılından bu yana taşımacılık sektöründe güven ve kaliteyi bir araya getiriyoruz. Modern araç filomuz, deneyimli sürücü kadromuz ve teknolojik altyapımızla personel taşımacılığı, öğrenci servis hizmetleri ve VIP transfer çözümleri sunuyoruz.';
+                    const firstParagraph = text ? text.split('\n\n')[0] || text : defaultText;
                     // Remove HTML tags from the text (more comprehensive cleaning)
                     const cleanText = firstParagraph
                         .replace(/<[^>]*>/g, '') // Remove all HTML tags
@@ -85,7 +146,7 @@ export default function About() {
             }
         }
         fetchAboutData();
-    }, []);
+    }, [settings]);
 
     return (
         <section className="py-24 bg-white relative overflow-hidden">

@@ -92,7 +92,7 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <ConditionalLayout>{children}</ConditionalLayout>
+        <ConditionalLayout settings={siteSettings}>{children}</ConditionalLayout>
       </body>
     </html>
   );

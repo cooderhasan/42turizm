@@ -6,7 +6,13 @@ import Header from './Header';
 import Footer from './Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 
-export default function ConditionalLayout({ children }: { children: React.ReactNode }) {
+export default function ConditionalLayout({
+    children,
+    settings
+}: {
+    children: React.ReactNode;
+    settings?: any; // Using any for now to avoid extensive type imports, but strictly it is typeof settings item
+}) {
     const pathname = usePathname();
 
     // Admin ve login sayfalarında Header/Footer gösterme
@@ -18,7 +24,7 @@ export default function ConditionalLayout({ children }: { children: React.ReactN
 
     return (
         <>
-            <Header />
+            <Header settings={settings} />
             {children}
             <Footer />
             <WhatsAppButton />

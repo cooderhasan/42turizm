@@ -51,20 +51,23 @@ const SERVICES_MENU = [
     },
 ];
 
-export default function Header() {
+export default function Header({ settings }: { settings?: any }) {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isServiceDropdownOpen, setIsServiceDropdownOpen] = useState(false);
-    const [logoUrl, setLogoUrl] = useState<string | null>(null);
+
+    // Initialize state with server-side settings
+    const [logoUrl, setLogoUrl] = useState<string | null>(settings?.logoUrl || null);
     const [socialMedia, setSocialMedia] = useState({
-        instagramUrl: '#',
-        facebookUrl: '#',
-        linkedinUrl: '#'
+        instagramUrl: settings?.instagramUrl || '#',
+        facebookUrl: settings?.facebookUrl || '#',
+        linkedinUrl: settings?.linkedinUrl || '#'
     });
     const [contactInfo, setContactInfo] = useState({
-        phone1: '+90 555 555 55 55',
-        email: 'info@42turizm.com'
+        phone1: settings?.phone1 || '+90 555 555 55 55',
+        email: settings?.email || 'info@42turizm.com'
     });
+
     const [logoTimestamp, setLogoTimestamp] = useState(Date.now());
     const pathname = usePathname();
     const isHome = pathname === '/';
@@ -77,8 +80,17 @@ export default function Header() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    // Only fetch if we don't have settings, or for background updates
     useEffect(() => {
         async function fetchLogo() {
+            // If we have initial logo and this is the first run (timestamp matches mount), maybe skip? 
+            // But we want to support long-running tab updates. 
+            // If settings were provided, we don't strictly *need* to fetch immediately.
+            // However, keeping the interval logic for freshness is fine. 
+            // We just ensure the INITIAL render is good.
+
+            if (settings?.logoUrl && logoTimestamp - Date.now() < 1000) return;
+
             try {
                 // Add timestamp to bypass cache
                 const response = await fetch(`/api/settings/logo?t=${logoTimestamp}`);
@@ -91,9 +103,10 @@ export default function Header() {
             }
         }
         fetchLogo();
-    }, [logoTimestamp]);
+    }, [logoTimestamp, settings?.logoUrl]);
 
     useEffect(() => {
+        if (settings) return; // Skip if we have server data
         async function fetchSocialMedia() {
             try {
                 const response = await fetch('/api/settings/social-media');
@@ -106,9 +119,10 @@ export default function Header() {
             }
         }
         fetchSocialMedia();
-    }, []);
+    }, [settings]);
 
     useEffect(() => {
+        if (settings) return; // Skip if we have server data
         async function fetchContactInfo() {
             try {
                 const response = await fetch('/api/settings/contact-info');
@@ -124,7 +138,7 @@ export default function Header() {
             }
         }
         fetchContactInfo();
-    }, []);
+    }, [settings]);
 
     // Refresh logo every 5 minutes to ensure updates are visible
     useEffect(() => {
