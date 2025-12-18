@@ -116,6 +116,7 @@ export async function updateSettings(prevState: any, formData: FormData) {
                 videoThumbnailUrl,
                 googleMapsEmbedUrl,
                 logoUrl,
+                faviconUrl,
                 footerText,
             });
         } else {
