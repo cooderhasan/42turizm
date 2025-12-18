@@ -13,9 +13,27 @@ export default function ImageUpload({ name, defaultValue, label = "Görsel Yükl
     const [preview, setPreview] = useState<string | null>(defaultValue || null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
+    const maxSizeInBytes = (sizeHint?.includes('MB') ? parseInt(sizeHint) : 5) * 1024 * 1024; // Default 5MB
+
+    const validateFile = (file: File): boolean => {
+        if (!file.type.startsWith('image/')) {
+            alert('Lütfen sadece resim dosyası yükleyiniz.');
+            return false;
+        }
+        if (file.size > maxSizeInBytes) {
+            alert(`Dosya boyutu çok büyük! Lütfen ${maxSizeInBytes / 1024 / 1024}MB'dan küçük bir dosya seçiniz.`);
+            return false;
+        }
+        return true;
+    };
+
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
+            if (!validateFile(file)) {
+                if (fileInputRef.current) fileInputRef.current.value = '';
+                return;
+            }
             const objectUrl = URL.createObjectURL(file);
             setPreview(objectUrl);
         }
@@ -34,7 +52,9 @@ export default function ImageUpload({ name, defaultValue, label = "Görsel Yükl
         e.stopPropagation();
 
         const file = e.dataTransfer.files?.[0];
-        if (file && file.type.startsWith('image/')) {
+        if (file) {
+            if (!validateFile(file)) return;
+
             if (fileInputRef.current) {
                 // Determine if we can programmatically set files (modern browsers allow this via DataTransfer)
                 const dataTransfer = new DataTransfer();
