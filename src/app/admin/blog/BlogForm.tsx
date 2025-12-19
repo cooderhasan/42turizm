@@ -51,6 +51,21 @@ export default function BlogForm({ initialData, action }: BlogFormProps) {
                 </div>
 
                 <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
+                    <select
+                        name="category"
+                        defaultValue={initialData?.category || 'Duyuru'}
+                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-gray-500"
+                    >
+                        <option value="Duyuru">Duyuru</option>
+                        <option value="Haber">Haber</option>
+                        <option value="Bilgilendirici Yazı">Bilgilendirici Yazı</option>
+                        <option value="Etkinlik">Etkinlik</option>
+                        <option value="Kampanya">Kampanya</option>
+                    </select>
+                </div>
+
+                <div>
                     <input type="hidden" name="existingImageUrl" value={initialData?.imageUrl || ''} />
                     <ImageUpload
                         name="image"

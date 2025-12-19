@@ -58,6 +58,7 @@ export async function createBlogPost(prevState: any, formData: FormData) {
         const content = formData.get('content') as string;
         // const imageUrl = formData.get('imageUrl') as string; 
         const imageFile = formData.get('image') as File;
+        const category = formData.get('category') as string || 'Duyuru';
         const isPublished = formData.get('isPublished') === 'on';
 
         // Handle Image Upload
@@ -77,6 +78,7 @@ export async function createBlogPost(prevState: any, formData: FormData) {
             excerpt,
             content,
             imageUrl,
+            category,
             isPublished,
             publishedAt: new Date(), // Set published time to now
         });
@@ -104,6 +106,7 @@ export async function updateBlogPost(id: number, prevState: any, formData: FormD
         // const imageUrl = formData.get('imageUrl') as string; 
         const imageFile = formData.get('image') as File;
         const existingImageUrl = formData.get('existingImageUrl') as string; // From hidden input in ImageUpload
+        const category = formData.get('category') as string || 'Duyuru';
         const isPublished = formData.get('isPublished') === 'on';
 
         // Handle Image Upload
@@ -124,6 +127,7 @@ export async function updateBlogPost(id: number, prevState: any, formData: FormD
                 excerpt,
                 content,
                 imageUrl,
+                category,
                 isPublished,
                 publishedAt: new Date(),
                 updatedAt: new Date(),
@@ -132,6 +136,7 @@ export async function updateBlogPost(id: number, prevState: any, formData: FormD
 
         revalidatePath('/admin/blog');
         revalidatePath('/blog');
+        revalidatePath('/'); // Refresh homepage for updated posts
         return { success: true, message: 'Yazı başarıyla güncellendi.' };
 
     } catch (error) {
@@ -145,6 +150,7 @@ export async function deleteBlogPost(id: number) {
         await db.delete(blogPosts).where(eq(blogPosts.id, id));
         revalidatePath('/admin/blog');
         revalidatePath('/blog');
+        revalidatePath('/'); // Refresh homepage for deleted posts
         return { success: true };
     } catch (error) {
         console.error('Error deleting blog post:', error);

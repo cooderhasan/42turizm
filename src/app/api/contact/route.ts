@@ -61,28 +61,40 @@ export async function POST(request: Request) {
             { condition: (message.match(/https?:\/\/[^\s]+/gi) || []).length > 2, message: 'Mesajınızda çok fazla link var. Lütfen en fazla 2 link kullanın.' },
 
             // Check for common spam keywords
-            { condition: /(viagra|cialis|casino|poker|loan|credit|bitcoin|crypto|free money|win big|click here|limited offer)/i.test(message),
-              message: 'Mesajınız spam olarak işaretlendi. Lütfen farklı içerik deneyin.' },
+            {
+                condition: /(viagra|cialis|casino|poker|loan|credit|bitcoin|crypto|free money|win big|click here|limited offer|bahis|kumar|porno|sex|erotik|bonus|promosyon|bettürkiye|bet|slot|rulet|blackjack|yasa dışı|kaçak bahis|canlı casino|deneme bonusu|freespin)/i.test(message),
+                message: 'Mesajınız spam olarak işaretlendi. Lütfen farklı içerik deneyin.'
+            },
 
             // Check for excessive capitalization
-            { condition: message.replace(/[^A-Z]/g, '').length > message.length * 0.5,
-              message: 'Mesajınızda çok fazla büyük harf var. Lütfen normal yazım kullanın.' },
+            {
+                condition: message.replace(/[^A-Z]/g, '').length > message.length * 0.5,
+                message: 'Mesajınızda çok fazla büyük harf var. Lütfen normal yazım kullanın.'
+            },
 
             // Check for repeated characters (common spam pattern)
-            { condition: /(.)\1{10,}/.test(message),
-              message: 'Mesajınız spam olarak işaretlendi. Tekrarlanan karakterler tespit edildi.' },
+            {
+                condition: /(.)\1{10,}/.test(message),
+                message: 'Mesajınız spam olarak işaretlendi. Tekrarlanan karakterler tespit edildi.'
+            },
 
             // Check email format
-            { condition: !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email),
-              message: 'Geçersiz e-posta formatı. Lütfen geçerli bir e-posta adresi girin.' },
+            {
+                condition: !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email),
+                message: 'Geçersiz e-posta formatı. Lütfen geçerli bir e-posta adresi girin.'
+            },
 
             // Check name length and content
-            { condition: name.length < 2 || name.length > 50,
-              message: 'Adınız çok kısa veya çok uzun. Lütfen gerçek adınızı girin.' },
+            {
+                condition: name.length < 2 || name.length > 50,
+                message: 'Adınız çok kısa veya çok uzun. Lütfen gerçek adınızı girin.'
+            },
 
             // Check for suspicious phone numbers
-            { condition: phone && !/^[\d\s()+-]{8,20}$/.test(phone),
-              message: 'Geçersiz telefon numarası formatı.' }
+            {
+                condition: phone && !/^[\d\s()+-]{8,20}$/.test(phone),
+                message: 'Geçersiz telefon numarası formatı.'
+            }
         ];
 
         const failedCheck = spamChecks.find(check => check.condition);

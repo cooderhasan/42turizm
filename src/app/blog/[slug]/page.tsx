@@ -89,7 +89,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             {/* Article Header */}
             <div className="bg-[#0a192f] text-white pt-48 pb-32">
                 <div className="container mx-auto px-4 text-center max-w-4xl">
-                    <span className="inline-block bg-[#d4af37] text-white text-xs font-bold px-3 py-1 rounded-full mb-6 uppercase tracking-wider">BLOG</span>
+                    <span className="inline-block bg-[#d4af37] text-white text-xs font-bold px-3 py-1 rounded-full mb-6 uppercase tracking-wider">{post.category || 'Duyuru'}</span>
                     <h1 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">{post.title}</h1>
                     <div className="flex flex-wrap items-center justify-center gap-6 text-gray-400 text-sm">
                         <div className="flex items-center gap-2">

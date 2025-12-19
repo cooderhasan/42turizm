@@ -51,7 +51,7 @@ export default async function BlogPage() {
                                         className="object-cover group-hover:scale-110 transition-transform duration-700"
                                     />
                                     <div className="absolute top-4 left-4 bg-[#d4af37] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                                        Duyuru
+                                        {post.category || 'Duyuru'}
                                     </div>
                                 </div>
 

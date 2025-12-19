@@ -77,6 +77,7 @@ export const blogPosts = pgTable('blog_posts', {
     author: text('author'),
     imageUrl: text('image_url'),
     publishedAt: timestamp('published_at'),
+    category: text('category').default('Duyuru'),
     isPublished: boolean('is_published').default(false),
     createdAt: timestamp('created_at').defaultNow(),
     updatedAt: timestamp('updated_at').defaultNow(),
