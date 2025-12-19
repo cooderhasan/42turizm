@@ -94,6 +94,7 @@ export async function createService(prevState: any, formData: FormData) {
 
         revalidatePath('/admin/services');
         revalidatePath('/hizmetlerimiz');
+        revalidatePath('/'); // Refresh homepage for new services
         return { success: true, message: 'Hizmet başarıyla oluşturuldu.' };
 
     } catch (error) {
@@ -155,6 +156,7 @@ export async function updateService(id: number, prevState: any, formData: FormDa
 
         revalidatePath('/admin/services');
         revalidatePath('/hizmetlerimiz');
+        revalidatePath('/'); // Refresh homepage for updated services
         return { success: true, message: 'Hizmet başarıyla güncellendi.' };
 
     } catch (error) {
@@ -168,6 +170,7 @@ export async function deleteService(id: number) {
         await db.delete(services).where(eq(services.id, id));
         revalidatePath('/admin/services');
         revalidatePath('/hizmetlerimiz');
+        revalidatePath('/'); // Refresh homepage for deleted services
         return { success: true };
     } catch (error) {
         console.error('Error deleting service:', error);

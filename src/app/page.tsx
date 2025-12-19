@@ -10,7 +10,6 @@ import { services, references, settings } from "@/db/schema";
 import { eq, asc } from "drizzle-orm";
 
 
-export const dynamic = 'force-dynamic';
 
 export default async function Home() {
   const serviceItems = await db.select().from(services).where(eq(services.isActive, true)).orderBy(services.order);
