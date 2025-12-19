@@ -87,6 +87,7 @@ export default function TestimonialForm({ initialData, action }: TestimonialForm
                 <div className="md:col-span-2">
                     <label className="block text-sm font-medium text-gray-700 mb-1">Müşteri Görseli</label>
                     <p className="text-xs text-gray-500 mb-2">Önerilen: 200x200px, PNG/JPG (Max 5MB)</p>
+                    <input type="hidden" name="existingImageUrl" value={initialData?.imageUrl || ''} />
                     <ImageUpload
                         name="imageFile"
                         defaultValue={initialData?.imageUrl}

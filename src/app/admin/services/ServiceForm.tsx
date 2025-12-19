@@ -49,6 +49,7 @@ export default function ServiceForm({ initialData, action }: ServiceFormProps) {
                 </div>
 
                 <div>
+                    <input type="hidden" name="existingImageUrl" value={initialData?.imageUrl || ''} />
                     <ImageUpload
                         name="image"
                         defaultValue={initialData?.imageUrl}

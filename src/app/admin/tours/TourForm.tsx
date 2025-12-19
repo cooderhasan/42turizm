@@ -48,6 +48,7 @@ export default function TourForm({ initialData, action }: TourFormProps) {
                 </div>
 
                 <div>
+                    <input type="hidden" name="existingImageUrl" value={initialData?.coverImage || ''} />
                     <ImageUpload
                         name="coverImageFile"
                         defaultValue={initialData?.coverImage}

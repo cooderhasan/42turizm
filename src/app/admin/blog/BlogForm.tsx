@@ -51,6 +51,7 @@ export default function BlogForm({ initialData, action }: BlogFormProps) {
                 </div>
 
                 <div>
+                    <input type="hidden" name="existingImageUrl" value={initialData?.imageUrl || ''} />
                     <ImageUpload
                         name="image"
                         defaultValue={initialData?.imageUrl}
