@@ -7,10 +7,11 @@ import { Users, Fuel, Briefcase } from 'lucide-react';
 
 const CATEGORIES = [
     { id: 'all', label: 'Tümü' },
-    { id: 'binek', label: 'Binek Araçlar' },
-    { id: 'vip', label: 'VIP Araçlar' },
-    { id: 'minibus', label: 'Minibüsler' },
-    { id: 'otobus', label: 'Otobüsler' },
+    { id: 'Binek', label: 'Binek Araçlar' },
+    { id: 'VIP', label: 'VIP Araçlar' },
+    { id: 'Minibüs', label: 'Minibüsler' },
+    { id: 'Otobüs', label: 'Otobüsler' },
+    { id: 'Midibüs', label: 'Midibüsler' },
 ];
 
 interface Vehicle {
