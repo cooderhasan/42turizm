@@ -82,7 +82,9 @@ export async function createBlogPost(prevState: any, formData: FormData) {
         });
 
         revalidatePath('/admin/blog');
+        revalidatePath('/admin/blog');
         revalidatePath('/blog');
+        revalidatePath('/'); // Refresh homepage for new posts
         // We cannot redirect inside a try-catch block easily with next-action helper in some versions, 
         // but returning success allows client to redirect.
         return { success: true, message: 'Yazı başarıyla oluşturuldu.' };
@@ -123,6 +125,8 @@ export async function updateBlogPost(id: number, prevState: any, formData: FormD
                 content,
                 imageUrl,
                 isPublished,
+                publishedAt: new Date(),
+                updatedAt: new Date(),
             })
             .where(eq(blogPosts.id, id));
 
