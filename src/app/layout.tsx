@@ -32,7 +32,7 @@ export async function generateMetadata(): Promise<Metadata> {
       default: siteSettings?.siteTitle || "42 Turizm | Personel ve Öğrenci Taşımacılığı",
       template: `%s | ${siteSettings?.siteTitle || "42 Turizm"}`
     },
-    metadataBase: new URL('https://www.42turizm.com'),
+    metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://42turizm.hasandurmus.com'),
     description: siteSettings?.siteDescription || "İstanbul'da güvenli, konforlu ve zamanında personel taşımacılığı, öğrenci servisi, VIP transfer ve filo kiralama hizmetleri. 42 Turizm ile yolculuğun keyfini çıkarın.",
     keywords: ["personel taşımacılığı", "öğrenci servisi", "vip transfer", "istanbul turizm", "filo kiralama", "gezi turları"],
     authors: [{ name: siteSettings?.siteTitle || "42 Turizm" }],
@@ -43,7 +43,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       type: "website",
       locale: "tr_TR",
-      url: "https://www.42turizm.com",
+      url: process.env.NEXT_PUBLIC_APP_URL || "https://42turizm.hasandurmus.com",
       title: siteSettings?.siteTitle || "42 Turizm | Güvenli ve Konforlu Taşımacılık",
       description: siteSettings?.siteDescription || "İstanbul'un önde gelen turizm ve taşımacılık firması. Personel, öğrenci ve VIP taşımacılık çözümleri.",
       siteName: siteSettings?.siteTitle || "42 Turizm",
@@ -73,8 +73,8 @@ export default async function RootLayout({
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": siteSettings?.siteTitle || "42 Turizm",
-    "url": "https://www.42turizm.com",
-    "logo": siteSettings?.logoUrl || "https://www.42turizm.com/logo.png",
+    "url": process.env.NEXT_PUBLIC_APP_URL || "https://42turizm.hasandurmus.com",
+    "logo": siteSettings?.logoUrl || `${process.env.NEXT_PUBLIC_APP_URL || "https://42turizm.hasandurmus.com"}/logo.png`,
     "description": siteSettings?.siteDescription || "İstanbul'da güvenli, konforlu ve zamanında personel taşımacılığı services.",
     "contactPoint": {
       "@type": "ContactPoint",

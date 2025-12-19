@@ -5,7 +5,7 @@ import { services, blogPosts } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = 'https://www.42turizm.com';
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://42turizm.hasandurmus.com';
 
     // Static routes
     const staticRoutes = [
