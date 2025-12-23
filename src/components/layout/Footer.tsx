@@ -99,7 +99,7 @@ export default function Footer() {
                                     alt="42 Turizm"
                                     width={200}
                                     height={60}
-                                    className="h-12 w-auto object-contain brightness-0 invert opacity-90" // Make it white/monochrome for footer if desired, or keep original. Let's keep original but ensure visibility.
+                                    className="h-16 w-auto object-contain brightness-0 invert opacity-90" // Make it white/monochrome for footer if desired, or keep original. Let's keep original but ensure visibility.
                                     onError={() => setLogoUrl(null)}
                                     unoptimized
                                 />

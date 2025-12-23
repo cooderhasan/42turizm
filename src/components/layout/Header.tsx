@@ -201,7 +201,7 @@ export default function Header({ settings }: { settings?: any }) {
                                 alt="42 Turizm"
                                 width={200}
                                 height={60}
-                                className="h-12 w-auto object-contain"
+                                className="h-16 w-auto object-contain"
                                 onError={() => setLogoUrl(null)} // Fallback to text if image fails (e.g. 404)
                                 unoptimized // Bypass optimization if there are issues with local files
                             />
